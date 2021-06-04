@@ -22,20 +22,23 @@
 	#span{color: #e74c3c; font-size: 22px; font-weight: bold;}
 	#line{background-color: #d7d7d7; height: 1px;}
 	#btDiv{display: flex; justify-content: center;}
-	
-	
 	#text{padding: 20px 0px 15px 0px}
+	
 	p{margin: 20px 0; font-size: 16px; color: #666;}
 	span{font-weight: 300;}
 	
 </style>
 <script type="text/javascript">
-	$(function(){
-		$("#login").click(function() {
-			$(location).attr('href', "http://localhost/team_prj2/prj2/login/login.jsp")
-		})
-		
-	})
+	
+	
+	function homeBt(){
+		opener.location.replace("http://localhost/team_prj2/prj2/main/main_all.jsp");
+		window.open('about:blank','_self').self.close();
+	};
+	
+	function closeBt(){
+		window.open('about:blank','_self').self.close();
+	};
 </script>
 </head>
 <body>
@@ -53,8 +56,8 @@
 			</div>
 			<div id="line"></div><br/>
 				<div id = "btDiv">
-					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px">홈으로</button>
-					<button type="button" class="btn btn-danger btn-lg" id = "login">로그인</button>
+					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px"onclick="homeBt()">홈으로</button>
+					<button type="button" class="btn btn-danger btn-lg" id = "login" onclick= "closeBt()">닫기</button>
 				</div>
 		</form>
 	</div>

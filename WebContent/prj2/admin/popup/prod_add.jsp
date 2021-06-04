@@ -1,3 +1,11 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="Product.ProductAdminDAO"%>
+<%@page import="Product.ProductVO"%>
+<%@page import="java.util.Date"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,21 +53,19 @@ function closeWin(){
 <body>
 
 
-						
+
 <div class = "wrap">
 	<div id="header">
-		<form name = "check">
 			<div >
 				<img src="http://localhost/team_prj2/prj2/admin/popup_img/green_v.PNG" alt="img_fail" >
 			</div>
 			<div id = "text">
-			<h4><strong>상품명</strong>이 <strong>추가</strong>되었습니다.</h4>
+			<h4><strong>상품</strong>이 <strong>추가</strong>되었습니다.</h4>
 			</div>
 			<div id="line"></div><br/>
 				<div id = "btDiv">
 					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px" onclick="closeWin()">확인</button>
 				</div>
-		</form>
 	</div>
 </div>
 </body>

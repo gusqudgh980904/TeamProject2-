@@ -17,25 +17,27 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- bootstrap -->
 <script src="http://localhost/team_prj2/common/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<!-- daum postcode -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <style type="text/css">
 	
 	.main_con{ width: 100%; justify-content: center; display: flex; flex-direction: column; align-items: center;}
 	#container{ width:  100%; height: 1800px;  }
 	
-	#join_basic{ width: 1300px; height:900px; position: absolute;  top: 380px; left:141px; }
-	#join_add{ width: 1300px; height:250px; position: absolute;  top: 1400px; left:141px; }
-	#join_font{position: absolute; top: 165px; left: 141px; font-size: 20px;}
-	#basic{position: absolute; top: 330px; left: 141px; font-size: 30px;}
-	#add{position: absolute; top: 1350px; left: 141px; font-size: 30px;}
-	#essential{position: absolute; top: 340px; left: 1275px; font-size: 25px;}
+	#join_basic{ width: 1300px; height:900px; position: absolute;  top: 380px; left:130px; }
+	#join_add{ width: 1300px; height:250px; position: absolute;  top: 1400px; left:130px; }
+	#join_font{position: absolute; top: 165px; left: 130px; font-size: 20px;}
+	#basic{position: absolute; top: 330px; left: 130px; font-size: 30px;}
+	#add{position: absolute; top: 1350px; left: 130px; font-size: 30px;}
+	#essential{position: absolute; top: 340px; left: 1270px; font-size: 25px;}
 	
 	#spanId{padding-left: 20px; padding-right: 45px;}
 	#spanPw{padding-left: 20px; padding-right: 20px;}
 	#loginBt{background-color:black; width: 100px; height: 50px; font-size: 15px; font-weight: bold; margin-bottom: 60px}
 	#hr{width: 600px; border: 1px solid #8F8F91}
 	#dup{font-size: 25px; margin: 0px 0px 8px 10px}
-	#commitBtDiv{width: 1300px;  margin-left: 141px; margin-bottom: 110px; display: flex; justify-content: center;}
+	#commitBtDiv{width: 1300px;  margin-left: 130px; margin-bottom: 110px; display: flex; justify-content: center;}
 	
 	.zipcode{margin: 20px 0px 20px 30px; width: 200px}
 	.addr{margin-bottom: 20px}
@@ -89,34 +91,68 @@
 	            }
 	        }).open();
 		})
+		
+		
+		$("#id, #pass, #passChk, #name, #zipcode, #addr1, #addr2, #phone2, #phone3, #email").keydown(function(evt){
+			if(evt.which == 13){
+				chkNull();
+			}//end if
+		});	
+		
+		$("#joinBtn").click(function(){ 
+			chkNull();
+		});	
+	
 	})
+	
+	function chkNull(){
+		if( $("#id").val() =="" ||  $("#pass").val() =="" || $("#passChk").val() =="" || $("#name").val() =="" ||$("#zipcode").val() =="" 
+				|| $("#addr1").val() =="" || $("#addr2").val() =="" || $("#phone2").val() =="" || $("#phone3").val() =="" || $("#email").val() ==""){
+			alert("필수입력사항을 입력해주세요.");
+			return; 
+		}//end if	 
+		
+		var pass = $("#pass").val(); 
+		var passChk = $("#passChk").val(); 
+
+		
+		if(pass != passChk){
+			alert("비밀번호와 비밀번호 확인을 동일하게 입력해주세요.");
+			return;
+		}
+		
+		  submit();
+	}
+	
+	function submit(){
+		var obj1 = document.joinFrm;	
+		obj1.submit();	
+	}
 	
 	function idCheck(){
 		window.open("http://localhost/team_prj2/prj2/login/popup/id_check.jsp"
 				,"ID CHECK","width = 640, height = 387, top ="+(window.sceenTop+100)+",left =" +(window.creenleft + 100));
 	}
 	
-	function joinSuccess(){
-		
-	}
+	
 </script>
 </head>
 <body>
-		<header class="header" >
+	    <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
@@ -129,7 +165,7 @@
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -142,7 +178,6 @@
             </ul>
         </div>
     </header>
-		
 		<div  id = container>
 			<div class = main_con >
 			<div id=join_font>
@@ -150,13 +185,13 @@
 			</div>
 				<strong id = "basic">기본정보</strong>
 				<span id="essential"><span style="color: red"> * </span>필수입력사항</span>
-			<div id = join_basic>
-				<form name = "joinFrm" action="$">
+				<form id = "joinFrm" name = "joinFrm"  action="process/join_process.jsp" method="post">
+				<div id = join_basic>
 					<table>
 						<tr>
 							<th>&emsp;아이디<span style="color: red"> *</span></th>
 							<td>
-								 <input type="text" class="form-control text" maxlength="16" name = "idTxt">
+								 <input type="text" class="form-control text" maxlength="16"  id ="id" name ="id">
 								 <a class="btn btn-default" id="dup" href="#" role="button" onclick="idCheck()">중복확인</a>
 								 <span class="explain">(영문 소문자/숫자, 4~16자)</span>
 							</td>
@@ -164,37 +199,37 @@
 						<tr>
 							<th>&emsp;비밀번호<span style="color: red"> *</span></th>
 							<td>
-								 <input type="password" class="form-control text" maxlength="16">
+								 <input type="password" class="form-control text" maxlength="16" id ="pass" name ="pass">
 								 <span class="explain">(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)</span>
 							</td>
 						</tr>
 						<tr>
 							<th>&emsp;비밀번호확인<span style="color: red"> *</span></th>
 							<td>
-								 <input type="password" class="form-control text" maxlength="16">
+								 <input type="password" class="form-control text" maxlength="16" id="passChk">
 							</td>
 						</tr>
 						<tr>
 							<th>&emsp;이름<span style="color: red"> *</span></th>
 							<td>
-								 <input type="text" class="form-control text" >
+								 <input type="text" class="form-control text" id ="name" name ="name">
 							</td>
 						</tr>
 						<tr style="height: 205px">
 							<th>&emsp;주소<span style="color: red"> *</span></th>
 							<td>
-								<input type="text" class="form-control text zipcode" id="zipcode" >
+								<input type="text" class="form-control text zipcode" id="zipcode" name ="zipcode">
 								<input type ="button" value="우편번호" class="btn btn-default zipBt" id="btnZipcode"/><br/><br/>
-								 <input type="text" class="form-control text addr"   id="addr1" >
+								 <input type="text" class="form-control text addr"   id="addr1"   name="addr1" >
 								 <span class="explain">기본주소</span><br/>
-								 <input type="text" class="form-control text addr"  >
+								 <input type="text" class="form-control text addr"  id ="addr2" name="addr2" >
 								 <span class="explain">상세주소</span><br/>
 							</td>
 						</tr>
 						<tr>
 							<th>&emsp;휴대전화<span style="color: red"> *</span></th>
 							<td>
-								 <select class="form-control phoneTx">
+								 <select class="form-control phoneTx" id="phone1" name ="phone1">
 									  <option>010</option>
 									  <option>011</option>
 									  <option>016</option>
@@ -202,32 +237,31 @@
 									  <option>018</option>
 									  <option>019</option>
 									</select><span class="hyphen">-</span>
-								 <input type="text" class="form-control phoneTx" >
+								 <input type="text" class="form-control phoneTx" id="phone2" name="phone2">
 									<span class="hyphen">-</span>
-								 <input type="text" class="form-control phoneTx" >
+								 <input type="text" class="form-control phoneTx"  id="phone3" name="phone3">
 							</td>
 						</tr>
 						<tr>
 							<th>&emsp;이메일<span style="color: red"> *</span></th>
 							<td>
-								 <input type="text" class="form-control text" >
+								 <input type="text" class="form-control text" id="email" name ="email">
 							</td>
 						</tr>
 					</table>
-				</form>
+				
 				</div>
 			
 			<strong id = "add">추가정보</strong>
 			<div id= join_add>
-				<form>
 					<table>
 						<tr>
 							<th style="width: 380px">&emsp;성별</th>
 							<td>
 								<div class="genderDiv">
-  									<input type="radio"  name="optionsRadios" value="option1" id="inlineRadio1"  class="gender" checked="checked">
+  									<input type="radio"  name="gender" value="남자" id="Radio1"  class="gender" checked="checked">
   									<span class="gender">남자</span>&emsp;
-									<input type="radio"  name="optionsRadios" value="option2" id="inlineRadio2"  class="gender">
+									<input type="radio"  name="gender" value="여자" id="Radio2"  class="gender">
 									<span class="gender">여자</span>
 								</div>
 							</td>
@@ -235,21 +269,21 @@
 						<tr>
 							<th style="width: 380px">&emsp;생년월일</th>
 							<td>
-								<input type="text" class="form-control phoneTx" >
+								<input type="text" class="form-control phoneTx" id="year" name="year">
 								<span class="birth">년</span>
-								<input type="text" class="form-control birthTx" >
+								<input type="text" class="form-control birthTx" id="month" name = "month">
 								<span class="birth">월</span>
-								<input type="text" class="form-control birthTx" >
+								<input type="text" class="form-control birthTx" id="day" name ="day">
 								<span class="birth">일</span>
 							</td>
 						</tr>
 					</table>
-				</form>
-			</div>
+				</div>
+			</form>
 		</div>
 		</div>
 		<div id ="commitBtDiv">
-			<button type="button" class="btn btn-danger commitBt"  onclick="joinSuccess()">회원가입</button>
+			<button type="button" class="btn btn-danger commitBt"  id ="joinBtn" >회원가입</button>
 		</div>
 		<footer>
 			<div class="footer-wrap">

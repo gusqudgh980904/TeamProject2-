@@ -1,21 +1,31 @@
 package Member;
 
 /**
- * 아이디를 찾는데 필요한 정보를 저장하는 클래스
+ * 비밀번호를 찾는데 필요한 정보를 저장하는 클래스
  * @author sist
  */
-public class SearchIDVO {
+public class SearchPwVO {
+	String member_id;
 	String member_name;
 	String member_email;
 	
-	public SearchIDVO() {
+	public SearchPwVO() {
 		super();
 	}
 
-	public SearchIDVO(String member_name, String member_email) {
+	public SearchPwVO(String member_id, String member_name, String member_email) {
 		super();
+		this.member_id = member_id;
 		this.member_name = member_name;
 		this.member_email = member_email;
+	}
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
 
 	public String getMember_name() {
@@ -33,6 +43,7 @@ public class SearchIDVO {
 	public void setMember_email(String member_email) {
 		this.member_email = member_email;
 	}
+
 	
 	
 }//class

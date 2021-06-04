@@ -1,5 +1,7 @@
+<%@page import="Member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,27 +28,51 @@
 </style>
 <script type="text/javascript">
 	function idCheck(){
-		//자식값
 		var obj =  document.checkFrm;
 		var idCheck = obj.checkTx.value;
-		//부모값
 		var pObj = opener.window.document.joinFrm
 		
-		pObj.idTxt.value = idCheck;
-		self.close();
-	} 
+		
+		if(idCheck == ""){
+			alert("아이디를 입력해주세요.");			
+			return; 
+		}
+		
+		obj.submit(); 
+		
+			<%	
+				String id = request.getParameter("checkTx"); //null 이뜸 var id = ${checkTx}도 null이뜸
+				
+				MemberDAO mDAO = new MemberDAO();
+				
+				boolean idChk = mDAO.selectDupID(id);
+				System.out.print(id);
+				if(!idChk){
+			%>
+				pObj.id.value = idCheck;
+				window.close(); 					
+			<%
+				}else{
+			%>
+				alert("중복된 아이디입니다.");
+				return;	
+			<%
+				}
+			%>
+		}
+	
 </script>
 </head>
 <body>
 <div class = "wrap">
 	<div id="header">
-		<form name = "checkFrm">
+		<form action="id_check.jsp" name = "checkFrm" id="checkFrm" >
 			<h2>ID CHECK<span> 아이디 중복확인</span></h2>
 			<p>사용하고자 하는 아이디를 입력해주세요.<br/>
 			아이디 중복확인 후 사용 가능한 아이디로 선택하시면 됩니다.</p>
 			<div id="inputDiv">
-				<input type="text" name ="checkTx" class="form-control text" maxlength="16"/>
-				<input type="button" value="ID 중복확인" name ="checkBt" class="btn btn-default btn-lg" onclick="idCheck()"/>
+				<input type="text" name ="checkTx" id ="checkTx" class="form-control text" maxlength="16"/>
+				<input type="button" value="ID 중복확인" name ="checkBt" id ="checkBt"  class="btn btn-default btn-lg" onclick="idCheck()"/>
 			</div>
 		</form>
 	</div>

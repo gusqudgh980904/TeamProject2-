@@ -1,3 +1,5 @@
+<%@page import="Product.ProductAdminDAO"%>
+<%@page import="Admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -67,9 +69,39 @@ td{text-align:center;width:300px;}
 #prodDetails{width:600px;height:500px;position:relative;left:650px;bottom:450px; margin-left: 350px;}
 </style>
 <script type="text/javascript">
-function add(){
+
+$(function(){
+
+	$("#addBtn").click(function(){
+		chkNull();											
+	})//onclick
+	
+});//ready
+
+function chkNull(){
+	if($("#prod_name").val()==""){
+		alert("상품명은 필수입력입니다.");
+		$("#prod_name").focus();
+		return;
+	}//if
+	if($("#price").val()==""){
+		alert("상품가격은 필수입력입니다.");
+		$("#price").focus();
+		return;
+	}//if
+	if($("#prod_detail").val()==""){
+		alert("상품설명은 필수입력입니다.");
+		$("#prod_detail").focus();
+		return;
+	}//if
+	if($("#prod_img").val()==""){
+		alert("이미지를 넣어주세요");
+		return;
+	}//if
+	$("#prod_addFrm").submit();	
 	window.open("http://localhost/team_prj2/prj2/admin/popup/prod_add.jsp","add","width=650,height=380px")
-}//confirm
+}//chkNull   
+
 </script>
 </head>
 <body>
@@ -91,37 +123,49 @@ function add(){
     <!-- header end -->
 <div id="wrap">
 	<div id="container">
+	
 	<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
 		<h1 id="title" >상품추가</h1>
-						<div id="prodImg">
-				상품이미지			
-				</div>
+				<form  enctype="multipart/form-data" id="prod_addFrm" name="prod_addFrm" method="post" action="http://localhost/team_prj2/prj2/product_process/product_add_process.jsp">
+						<div id="prodImg"><!-- 이미지 넣기 -->
+							<input type="file"name="prod_img"id="prod_img"/>
+						</div> 
 				<table id="prodDetails" class="table table-bordered">
 							<tr>
-						<th>상품번호</th><td><input type="text"  class="form-control"autofocus="autofocus"/></td>				
+						<th>상품번호</th><td><input type="text"  class="form-control" id="prod_num" name="prod_num" readonly="readonly" placeholder="자동입력"/></td>				
 					</tr>
 					<tr>
-						<th>상품명</th><td><input type="text"class="form-control" /></td>				
+						<th>상품명</th><td><input type="text"class="form-control" id="prod_name" name="prod_name" autofocus="autofocus"/></td>				
 					</tr>
 					<tr>
-						<th>가격</th><td><input type="text"class="form-control" /></td>				
+						<th>가격</th><td><input type="text"class="form-control" id="price" name="price" /></td>				
 					</tr>
 					<tr>
 						<th>구분</th><td>TOP<input type="radio" name="category" value="상의"checked="checked"/><br/>
 										BOTTOM<input type="radio" name="category" value="하의"/></td>				
 					</tr>
 					<tr>
-						<th style="height:150px;">사이즈</th><td>S<input type="checkbox" name="size" value="s"checked="checked"/><br/>
-																M<input type="checkbox" name="size" value="m"/><br/>
-																L<input type="checkbox" name="size" value="l"/>
+						<th style="height:150px;">사이즈</th><td style="text-align:center;">
+						<select name="size">
+								<option value="S">S</option>												
+								<option value="M">M</option>												
+								<option value="L">L</option>												
+						</select>										
 						</td>				
 					</tr>
 					<tr>
-						<th>상품설명</th><td><input type="text"class="form-control"  /></td>				
+						<th>상품설명</th><td><input type="text"class="form-control" id="prod_detail" name="prod_detail"  /></td>				
+					</tr>
+					<tr>
+						<th>추가날짜</th><td><input type="text" readonly="readonly" name="add_date" id="add_date"placeholder="SYSDATE"></td>
+					</tr>
+					<tr>
+						<th>삭제여부</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="N"/></td>
 					</tr>
 				</table>
 			
-			<input type="button" value="추가" class="btn btn-primary btn-lg" style="position:relative;left:1400px;bottom:400px;"onclick="add()"/>		
+			<input type="button" value="추가" class="btn btn-primary btn-lg" name="addBtn" id="addBtn" style="position:relative;left:1400px;bottom:400px;"/>		
+				</form>
 	</div>
 </div>
  <!-- footer start -->

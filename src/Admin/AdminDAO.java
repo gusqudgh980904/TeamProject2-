@@ -16,9 +16,14 @@ import DBConnection.AdminDBConnection;
 public class AdminDAO {
 	AdminDBConnection dc=AdminDBConnection.getInstance();
 	
+	
+	public AdminDAO() {
+		
+	}
+
+
 	/**
 	 * 관리자가 회원을 탈퇴시키는 일(Y->N)
-	 * 
 	 * @param member_id
 	 * @return
 	 * @throws SQLException
@@ -33,12 +38,13 @@ public class AdminDAO {
 	con=dc.getConn();
 	
 	String deleteUser="update member "
-			+ "set member_withdrawal='N' "
+			+ "set member_withdrawal=? "
 			+ "where=?";
 	
 	pstmt=con.prepareStatement(deleteUser);
 	
-	pstmt.setString(1,auoVO.getMember_id());
+	pstmt.setString(1,"'Y'");
+	pstmt.setString(2,auoVO.getMember_id());
 	
 	cnt=pstmt.executeUpdate();
 	}finally {

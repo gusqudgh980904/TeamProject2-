@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ 
+ <%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 공통 JSP
+	String userId =(String)session.getAttribute("id"); 
+	String TempraryPW = (String)session.getAttribute("TempraryPW");
+ 
+	if(TempraryPW == null || userId == null){  
+		response.sendRedirect("http://localhost/team_prj2/prj2/login/login.jsp");
+		return;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +47,13 @@ $(function(){
 	})
 	
 })
+
+function loginBtn(){
+		opener.location.replace("http://localhost/team_prj2/prj2/login/login.jsp");
+		window.open('about:blank','_self').self.close();
+	};
+	
+
 </script>
 </head>
 <body>
@@ -45,12 +63,12 @@ $(function(){
 			<div >
 				<img src="http://localhost/team_prj2/prj2/login/popup_img/blue_v.PNG" alt="img_fail" >
 			</div>
-			<h4><strong style="font-size: 25px">홍길동</strong>님의 임시 비밀번호 발급이 완료되었습니다.</h4>
-			<p>임시비밀번호 : <span id ="span">pass1234</span></p>
+			<h4><strong style="font-size: 25px"><%= userId %></strong>님의 임시 비밀번호 발급이 완료되었습니다.</h4>
+			<p>임시비밀번호 : <span id ="span"><%= TempraryPW %></span></p>
 			<br/>
 			<div id="line"></div><br/>
 				<div id = "btDiv">
-					<button type="button" class="btn btn-primary btn-lg" id="login">로그인</button>
+					<button type="button" class="btn btn-primary btn-lg" id="login" onclick="loginBtn()">로그인</button>
 				</div>
 		</form>
 	</div>

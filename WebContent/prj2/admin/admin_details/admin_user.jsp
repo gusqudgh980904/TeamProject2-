@@ -79,7 +79,7 @@ function remove(){
     <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/jsp_prj/common/images/%EC%83%81%ED%95%98%EC%9D%98%EC%8A%A4%ED%8A%B8%EB%A6%BF.png"></a></h1>
+                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/%EC%83%81%ED%95%98%EC%9D%98%EC%8A%A4%ED%8A%B8%EB%A6%BF.png"></a></h1>
                 <ul class="navigation">
       				  <li> <a href="" style="color: black">메인홈</a></li>
                   	<li><a href="http://localhost/team_prj2/prj2/admin/admin_contents/admin_users.jsp" style="color: black">회원목록</a></li>

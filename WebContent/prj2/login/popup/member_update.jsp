@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 공통 JSP
+	String userId = (String)session.getAttribute("id"); 
+ 	if(userId == null){  
+		response.sendRedirect("http://localhost/team_prj2/prj2/login/login.jsp");
+		return;
+	} 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +38,10 @@
 	
 </style>
 <script type="text/javascript">
-
+function homeBt(){
+	opener.location.replace("http://localhost/team_prj2/prj2/main/main_all.jsp");
+	window.open('about:blank','_self').self.close();
+};
 </script>
 </head>
 <body>
@@ -41,11 +52,11 @@
 				<img src="http://localhost/team_prj2/prj2/login/popup_img/green_v.PNG" alt="img_fail" >
 			</div>
 			<div id = "text">
-			<h4><strong style="font-size: 25px">홍길동</strong>님의 회원정보수정이 완료되었습니다.</h4>
+			<h4><strong style="font-size: 25px"><%= userId %></strong>님의 회원정보수정이 완료되었습니다.</h4>
 			</div>
 			<div id="line"></div><br/>
 				<div id = "btDiv">
-					<button type="button" class="btn btn-success btn-lg" style="margin-right: 10px">홈으로</button>
+					<button type="button" class="btn btn-success btn-lg" style="margin-right: 10px" onclick="homeBt()">홈으로</button>
 				</div>
 		</form>
 	</div>

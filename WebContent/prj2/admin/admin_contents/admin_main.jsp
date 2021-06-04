@@ -12,7 +12,6 @@
 <link href="http://localhost/team_prj2/common/css/yl_main.css" rel="stylesheet" >
 <link href="http://localhost/team_prj2/common/css/main.css" rel="stylesheet" >
 
-<title>LookBook</title>
 
 <!-- bootstrap -->
 <link href="http://localhost/team_prj2/common/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -83,6 +82,12 @@ th {
 			<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
 			<table class="table table-bordered" style="width:1200px;height:500px;position:relative;left:20px;top:80px;">
 				<tr>
+				<%
+				request.setCharacterEncoding("UTF-8");
+				String prod_name=request.getParameter("prod_name");
+				String price=request.getParameter("price");
+				String prod_detail=request.getParameter("prod_detail");
+				%>
 					<th>상품번호</th>			
 					<th>이미지</th>			
 					<th>상품명</th>			
@@ -90,11 +95,11 @@ th {
 					<th>상품설명</th>			
 				</tr>
 				<tr>
-					<td><a href="http://localhost/team_prj2/prj2/admin/admin_product/modify&remove.jsp">00001</a></td>
+					<td><a href="http://localhost/team_prj2/prj2/admin/admin_product/modify&remove.jsp?">00001</a></td>
 					<td>img</td>
-					<td>상의</td>
-					<td>8000원</td>
-					<td>어쩌구</td>
+					<td><%=prod_name %></td>
+					<td><%=price %></td>
+					<td><%=prod_detail %></td>
 				</tr>
 				<tr>
 					<td>00002</td>

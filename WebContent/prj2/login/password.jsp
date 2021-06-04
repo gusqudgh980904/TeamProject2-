@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 공통 JSP
+	String userId =(String)session.getAttribute("id");
+	if(userId == null){  
+		response.sendRedirect("http://localhost/team_prj2/prj2/login/login.jsp");
+		return;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,10 +31,10 @@
 	.main_con{ width: 100%; justify-content: center; display: flex; flex-direction: column; align-items: center;}
 	#container{ width:  100%; height: 1000px;  }
 	
-	#join_pw{width: 1300px; height:250px; position: absolute;  top: 390px; left:141px;}
-	#join_font{position: absolute; top: 165px; left: 141px; font-size: 20px;}
-	#pw{position: absolute; top: 330px; left: 141px; font-size: 30px;}
-	#essential{position: absolute; top: 340px; left: 1275px; font-size: 25px;}
+	#join_pw{width: 1300px; height:250px; position: absolute;  top: 390px; left:130px;}
+	#join_font{position: absolute; top: 165px; left: 130px; font-size: 20px;}
+	#pw{position: absolute; top: 330px; left: 130px; font-size: 30px;}
+	#essential{position: absolute; top: 340px; left: 1270px; font-size: 25px;}
 	
 	#spanId{padding-left: 20px; padding-right: 45px;}
 	#spanPw{padding-left: 20px; padding-right: 20px;}
@@ -59,28 +67,64 @@
 </style>
 
 <script type="text/javascript">
+$(function(){
+	$("#pass").keydown(function(evt){ 
+		if(evt.which == 13){
+			chkNull();
+		}//end if
+	});	
+	$("#passChk").keydown(function(evt){ 
+		if(evt.which == 13){
+			chkNull();
+		}//end if
+	});	
+	$("#bt").click(function(){ 
+		chkNull();
+	});	
+});
+
+function chkNull(){
+	if( $("#pass").val() ==""){
+		alert("비밀번호는 필수 입력");
+		$("#pass").focus();
+		return;
+	}//end if
+	if( $("#passChk").val() ==""){
+		alert("비밀번호 확인은 필수 입력");
+		$("#passChk").focus();
+		return;
+	}//end if
 	
+	var pass = $("#pass").val(); 
+	var passChk = $("#passChk").val(); 
+
+	if(pass != passChk){
+		alert("비밀번호와 비밀번호 확인을 동일하게 입력해주세요.");
+		return;
+	}
+	
+	$("#passFrm").submit();
+}//chkNull
 
 
 </script>
 </head>
 <body>
-<div>
-		<header class="header" >
+    <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
@@ -93,7 +137,7 @@
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -114,25 +158,25 @@
 			</div>	
 			<strong id = "pw">비밀번호설정</strong>
 			<div id= join_pw>
-				<form>
+				<form action="process/pass_process.jsp" method="post" name ="passFrm" id="passFrm">
 					<table>
 						<tr>
 							<th>&emsp;비밀번호</th>
 							<td>
-								 <input type="password" class="form-control text" maxlength="16">
+								 <input type="password" class="form-control text" maxlength="30" name ="pass" id="pass">
 								 <span class="explain">(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)</span>
 							</td>
 						</tr>
 						<tr>
 							<th>&emsp;비밀번호확인</th>
 							<td>
-								 <input type="password" class="form-control text" maxlength="16">
+								 <input type="password" class="form-control text" maxlength="30" name ="passChk" id="passChk">
 							</td>
 						</tr>
 					</table>
 				</form>
 					<div id ="commitBtDiv">
-						<button type="button" class="btn btn-danger commitBt">변경하기</button>
+						<button type="button" class="btn btn-danger commitBt" name ="bt" id="bt">변경하기</button>
 					</div>
 				</div>
 		</div>

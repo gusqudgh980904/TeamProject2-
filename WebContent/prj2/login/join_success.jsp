@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 공통 JSP
+	String userId = (String)session.getAttribute("id");
+	if(userId == null){  
+		response.sendRedirect("http://localhost/team_prj2/prj2/login/login.jsp");
+		return;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,30 +48,31 @@
 </style>
 
 <script type="text/javascript">
-function login(){
-	var obj = document.loginFrm;
-	var id = obj.id.value;
-	var pass = obj.pass.value;
+	function login(){
+		location.href = "http://localhost/team_prj2/prj2/login/login.jsp";
+	}
 	
-}
+	function home(){
+		location.href = "http://localhost/team_prj2/prj2/main/main_all.jsp";
+	}
 </script>
 </head>
 <body>
-		<header class="header" >
+    <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
@@ -76,7 +85,7 @@ function login(){
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -89,7 +98,6 @@ function login(){
             </ul>
         </div>
     </header>
-		
 		<div  id = container>
 			<div class = main_con >
 				<div id = login_wrap>
@@ -99,12 +107,12 @@ function login(){
 					</div>
 					<div id ="mainFont">
 						<h4><strong style="font-size: 40px">홍길동</strong>님의 회원가입을 축하합니다.</h4>
-						<p>가입하신 ID는<span id ="span"> id1234 </span>입니다.</p>
+						<p>가입하신 ID는<span id ="span"> <%= userId %> </span>입니다.</p>
 						<div id="line"></div><br/>
 					</div>
 				<div id = "btDiv">
-					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px; font-size: 20px">홈으로</button>
-					<button type="button" class="btn btn-success btn-lg" style="font-size: 20px">로그인</button>
+					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px; font-size: 20px" onclick="home()">홈으로</button>
+					<button type="button" class="btn btn-success btn-lg" style="font-size: 20px" onclick="login()">로그인</button>
 				</div>
 		</form>
 

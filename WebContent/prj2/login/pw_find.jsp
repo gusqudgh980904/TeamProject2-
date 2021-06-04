@@ -30,7 +30,7 @@
 	
 	#spanId{padding-left: 20px; padding-right: 45px; }
 	#spanPw{padding-left: 20px; padding-right: 70px;}
-	#Bt{background-color:black; width: 120px; height: 60px; font-size: 25px; font-weight: bold; }
+	#bt{background-color:black; width: 120px; height: 60px; font-size: 25px; font-weight: bold; }
 	#hr{width: 600px; border: 1px solid #8F8F91}
 	#guide{text-align: center; color: #999; width: 600px; margin-left: 50px}
 	
@@ -44,30 +44,63 @@
 </style>
 
 <script type="text/javascript">
-function login(){
-	var obj = document.loginFrm;
-	var id = obj.id.value;
-	var pass = obj.pass.value;
-	
-}
+$(function(){
+	$("#id").keydown(function(evt){ 
+		if(evt.which == 13){
+			chkNull();
+		}//end if
+	});	
+	$("#name").keydown(function(evt){ 
+		if(evt.which == 13){
+			chkNull();
+		}//end if
+	});	
+	$("#email").keydown(function(evt){ 
+		if(evt.which == 13){
+			chkNull();
+		}//end if
+	});	
+	$("#bt").click(function(){ 
+		chkNull();
+	});	
+});
+
+function chkNull(){
+	if( $("#id").val() ==""){
+		alert("아이디는 필수 입력");
+		$("#id").focus();
+		return;
+	}//end if
+	if( $("#name").val() ==""){
+		alert("이름은 필수 입력");
+		$("#name").focus();
+		return;
+	}//end if
+	if( $("#email").val() ==""){
+		alert("이메일은 필수 입력");
+		$("#email").focus();
+		return;
+	}//end if
+	$("#pwFrm").submit();
+}//chkNull
 </script>
 </head>
 <body>
-		<header class="header" >
+    <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
@@ -80,7 +113,7 @@ function login(){
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -99,24 +132,24 @@ function login(){
 			<div id=login_font><p>PASSWORD FIND</p>홈 > 비밀번호 찾기</div>
 			<div id = login_wrap>
 				<div id="login_header">비밀번호 찾기</div><br/>
-				<form>
+				<form action="process/pw_find_process.jsp" method="post" id = "pwFrm" name = "pwFrm">
 				<div id= login_container>
 					<label>
 						<span id = "spanId">아이디</span>
-						<input type="text" autofocus="autofocus" tabindex="1" maxlength="16">
+						<input type="text" autofocus="autofocus" tabindex="1" maxlength="16" id = "id" name ="id">
 					</label>
 					<br/>
 					<label>
 						<span id = "spanPw">이름</span>
-						<input type="text"  tabindex="2" maxlength="16">
+						<input type="text"  tabindex="2" maxlength="16" name ="name" id="name">
 					</label>
 					<br/>
 					<label>
 						<span id = "spanId">이메일</span>
-						<input type="text"  tabindex="3" >
+						<input type="text"  tabindex="3" name ="email" id="email">
 					</label>
 					<br/>
-						<button type="button" class="btn btn-primary"  id="Bt">확인</button>
+						<button type="button" class="btn btn-primary"  id="bt" name ="bt">확인</button>
 				</div>
 				</form>
 			</div>
