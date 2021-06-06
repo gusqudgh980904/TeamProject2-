@@ -1,5 +1,9 @@
-<%@page import="Product.ProductDAO"%>
 <%@page import="Product.ProductDetailUserVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Product.ProductVO"%>
+<%@page import="Product.ProductDAO"%>
+<%@page import="Product.ProductListUserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,36 +13,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- YL CSS -->
 <link href="http://localhost/team_prj2/common/css/yl_main.css" rel="stylesheet" >
+    <title>상하의STREET</title>
 <!-- bootstrap -->
 <link href="http://localhost/team_prj2/common/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet">
 <!-- jQuery CDN(Contents Delivery Network) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- bootstrap -->
 <script src="http://localhost/team_prj2/common/bootstrap-3.3.2/js/bootstrap.min.js"></script>
-    <title>상하의STREET</title>
-    
 <style type="text/css">
 #wrap{width:  1583px; height: 1580px; margin: 0px auto;} 
 #header{width:  1583px; height: 105px; border-bottom: 1px solid #dddddd;}
-#container{width:  1583px; height: 1000px; }
+.container{width:  2000px; height: 1000px; padding-left: 100px; }
 #footer{width:  1583px; height: 475px; border-top: 1px solid #dddddd;} 
 
-#content{position: relative; top: 100px;overflow: hidden;}
-#prodImg{float:left;width:550px;height: 500px; align-content: center;}
-#prodDetail{float:right;width: 550px;height: 600px;}
-
-.inside_border{border-top: 2px solid #dfdfdf;}
-#tabPhoto{width: 550px;height: 500px; margin-left:100px;}
-#tabDetail{width: 550px;height: 500px; margin-left: auto; margin-right: auto;}
-#prodName{font-size:20px;}
-#price{font-size: 30px;}
+table{border-collapse: separate; border-spacing: 20px;}
+td{width: 395px;height:350px;border:1px solid #dfdfdf; text-align: center;}
+td:hover {background-color:#dfdfdf;}
+h3{text-align: center; font-style:italic;}
 </style>
 <script type="text/javascript">
 
 </script>
 <%
 
+/* //parameter 값 받기
+int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+ProductVO pv=new ProductVO();
+pv.setProd_num(prod_num);
+//DAO단의 클래스를 사용하여 DB작업 수행
+ProductDAO pDAO = new ProductDAO();
+ProductListUserVO pluVO = pDAO.selectProductListUser(pv); 
+System.out.println("dskfajl"+pluVO); */
+
+/* String num = request.getParameter("prod_num");
+int prod_num = Integer.parseInt(num);
+ProductListUserVO pluVO = new ProductListUserVO();
+pluVO.setProd_num(num);
+//DB 작업 수행
+ProductDAO pDAO = new ProductDAO();
+ProductListUserVO pluVO = pDAO.selectProductListUser(prod_num);
+ */
+
+ 
 %>
+
 </head>
 <body>
 	<!-- header start -->
@@ -85,72 +103,43 @@
     <!-- header end -->
     <section>
     <!-- container start -->
-        <div class="container">
-		<div id="content">
-			<div id="prodImg">
-			<table id="tabPhoto">
-			<tr>
-				<td>
-				<% 
-				
-				ProductDAO pDAO=new ProductDAO();
-				int prod_num=Integer.parseInt(request.getParameter("prod_num"));
-				
-				ProductDetailUserVO pduVO = pDAO.selectProductUser(prod_num);
-				%>
-				<img src="http://localhost/team_prj2/common/product_photo/<%=pduVO.getProd_img()%>"/>
-				</td>
-			</tr>
-			</table>
-			</div>
+        <div class="container" style="overflow-y:auto; overflow-x:hidden;">
+		<div>
+		<h3>Brand New !</h3>
 			
-			<div id="prodDetail">
-			<form>
-			<table id="tabDetail" style="top: 200px;">
-			<tr class="inside_border" id=prodName>
-				<th colspan="2"><%=pduVO.getProd_name() %></th>
-			</tr>
+			<div >
+			<form action="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp" method="post">
+			<table >
+			
 			<tr>
-				<th colspan="2" id="price"><%=pduVO.getProd_price() %>원</th>
-			</tr>		
-			<tr>
-				<td colspan="2"><%=pduVO.getProd_explain() %></td>
-			</tr>
-			<tr class="inside_border">
-				<th>사이즈</th>
+			<%	
+				ProductDAO pDAO = new ProductDAO();
+			
+				List<ProductListUserVO> list = pDAO.selectProductTopListUser();
+			
+			int i=0;
+				for(ProductListUserVO pluVO : list){
+			%>
 				<td>
-				<select>
-					<option>S</option>
-					<option>M</option>
-					<option>L</option>
-				</select>  
+				<a href="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp?prod_num=<%=pluVO.getProd_num()%>">
+				<img src="http://localhost/team_prj2/common/product_photo/<%=pluVO.getProd_img()%>"/>
+				</a>
+				<%i++; %>
+			
+			
 				</td>
-			</tr>
-			<tr class="inside_border">
-				<th>수량</th>
-				<td>
-				<input type="button" class="btn" value="-">
-				<input type="text" value="1" style="width: 30px;">
-				<input type="button" class="btn" value="+">
-				<!-- <input type="number" value="1" min="0" max="10" id="txtQuantity"> -->
-				</td>
-			</tr>
-			<tr class="inside_border">
-				<th>총결제금액</th>
-				<th>
-				<input type="text" readonly="readonly"<%=pduVO.getProd_price() %>>원
-				</th>
-			</tr>
-					<tr>
-				<td colspan="2">
-				<button type="button" class="btn btn-default btn-lg btn-block">결제하기</button>
-				</td>
-			</tr>
+				<% if(i%4==0){
+				%>
+			</tr><tr>
+			<%}//if%>
+			<%}//for%>
+		
 			</table>
 			</form>
 			</div>
-		</div>		
-		</div>	
+			
+        </div>
+    </div>
     </section>
     <!-- container end -->
      <!-- footer start -->

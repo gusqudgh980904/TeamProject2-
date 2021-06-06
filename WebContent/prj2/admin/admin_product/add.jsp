@@ -99,7 +99,7 @@ function chkNull(){
 		return;
 	}//if
 	$("#prod_addFrm").submit();	
-	window.open("http://localhost/team_prj2/prj2/admin/popup/prod_add.jsp","add","width=650,height=380px")
+	window.open("http://localhost/team_prj2/prj2/admin/popup/prod_add.jsp","add","width=650,height=380px");
 }//chkNull   
 
 </script>
@@ -144,15 +144,7 @@ function chkNull(){
 						<th>구분</th><td>TOP<input type="radio" name="category" value="상의"checked="checked"/><br/>
 										BOTTOM<input type="radio" name="category" value="하의"/></td>				
 					</tr>
-					<tr>
-						<th style="height:150px;">사이즈</th><td style="text-align:center;">
-						<select name="size">
-								<option value="S">S</option>												
-								<option value="M">M</option>												
-								<option value="L">L</option>												
-						</select>										
-						</td>				
-					</tr>
+			
 					<tr>
 						<th>상품설명</th><td><input type="text"class="form-control" id="prod_detail" name="prod_detail"  /></td>				
 					</tr>

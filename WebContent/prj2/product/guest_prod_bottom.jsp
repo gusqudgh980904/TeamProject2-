@@ -1,3 +1,9 @@
+<%@page import="Product.ProductDetailUserVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Product.ProductVO"%>
+<%@page import="Product.ProductDAO"%>
+<%@page import="Product.ProductListUserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +23,7 @@
 <style type="text/css">
 #wrap{width:  1583px; height: 1580px; margin: 0px auto;} 
 #header{width:  1583px; height: 105px; border-bottom: 1px solid #dddddd;}
-#container{width:  1583px; height: 1000px; }
+.container{width:  2000px; height: 1000px; padding-left: 100px; }
 #footer{width:  1583px; height: 475px; border-top: 1px solid #dddddd;} 
 
 table{border-collapse: separate; border-spacing: 20px;}
@@ -26,7 +32,31 @@ td:hover {background-color:#dfdfdf;}
 h3{text-align: center; font-style:italic;}
 </style>
 <script type="text/javascript">
+
 </script>
+<%
+
+/* //parameter 값 받기
+int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+ProductVO pv=new ProductVO();
+pv.setProd_num(prod_num);
+//DAO단의 클래스를 사용하여 DB작업 수행
+ProductDAO pDAO = new ProductDAO();
+ProductListUserVO pluVO = pDAO.selectProductListUser(pv); 
+System.out.println("dskfajl"+pluVO); */
+
+/* String num = request.getParameter("prod_num");
+int prod_num = Integer.parseInt(num);
+ProductListUserVO pluVO = new ProductListUserVO();
+pluVO.setProd_num(num);
+//DB 작업 수행
+ProductDAO pDAO = new ProductDAO();
+ProductListUserVO pluVO = pDAO.selectProductListUser(prod_num);
+ */
+
+ 
+%>
+
 </head>
 <body>
 	<!-- header start -->
@@ -73,26 +103,44 @@ h3{text-align: center; font-style:italic;}
     <!-- header end -->
     <section>
     <!-- container start -->
-        <div class="container">
+        <div class="container" style="overflow-y:auto; overflow-x:hidden;">
 		<div>
-			<h3>Brand New !</h3>
-			<table>
-			<tr>
-				<td onclick="location.href='http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp'">1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-			</tr>
+		<h3>Brand New !</h3>
+			
+			<div>
+			<form action="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp" method="post">
+			<table >
 			
 			<tr>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-			</tr>
+			
+			<%	
+			request.setCharacterEncoding("UTF-8");
+				ProductDAO pDAO = new ProductDAO();
+			
+				List<ProductListUserVO> list = pDAO.selectProductBottomListUser();
+			
+			int i=0;
+				for(ProductListUserVO pluVO : list){
+			%>
+				<td>
+				<a href="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp?prod_num=<%=pluVO.getProd_num()%>">
+				<img src="http://localhost/team_prj2/common/product_photo/<%=pluVO.getProd_img()%>"/>
+				</a>
+				<%i++; %>
+			
+				</td>
+				<% if(i%4==0){
+				%>
+			</tr><tr>
+			<%}//if%>
+			<%}//for%>
+		
 			</table>
-		</div>
+			</form>
+			</div>
+			
         </div>
+    </div>
     </section>
     <!-- container end -->
      <!-- footer start -->

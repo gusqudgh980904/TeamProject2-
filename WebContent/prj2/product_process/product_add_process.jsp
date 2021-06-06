@@ -42,7 +42,6 @@
 			String prod_name=mr.getParameter("prod_name");
 			String price=mr.getParameter("price");
 			String category=mr.getParameter("category");
-			String size=mr.getParameter("size");
 			String prod_detail=mr.getParameter("prod_detail");
 			
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd-a hh:mm:ss EEEE");
@@ -57,7 +56,6 @@
 					prod_name,
 					price,
 					prod_detail,
-					size,
 					withdrawl,
 					prod_img,
 					add_date);

@@ -1,7 +1,6 @@
 package Product;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ public class ProductAdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String insertProduct="insert into PRODUCT values (PROD_NUM_SEQ.NEXTVAL,?,?,?,?,?,?,?,?)";
+		String insertProduct="insert into PRODUCT values (PROD_NUM_SEQ.NEXTVAL,?,?,?,?,?,?,?)";
 		
 							
 		
@@ -42,10 +41,9 @@ public class ProductAdminDAO {
 		pstmt.setString(2,pVO.getProd_name());
 		pstmt.setString(3,pVO.getProd_price());
 		pstmt.setString(4,pVO.getProd_detail());
-		pstmt.setString(5,pVO.getProd_size());
-		pstmt.setString(6,pVO.getProd_delete());
-		pstmt.setString(7,pVO.getProd_img());
-		pstmt.setString(8,pVO.getProd_add_date());
+		pstmt.setString(5,pVO.getProd_delete());
+		pstmt.setString(6,pVO.getProd_img());
+		pstmt.setString(7,pVO.getProd_add_date());
 		
 		pstmt.executeUpdate();
 		
