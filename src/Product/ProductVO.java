@@ -10,7 +10,6 @@ public class ProductVO {
    private String prod_name;
    private String prod_price;
    private String prod_detail;
-   private String prod_size;
    private String prod_delete;
    private String prod_img;
    private String prod_add_date;
@@ -18,14 +17,13 @@ public class ProductVO {
       super();
    }
    public ProductVO(String prod_num, String prod_cat, String prod_name, String prod_price, String prod_detail,
-         String prod_size, String prod_delete, String prod_img, String prod_add_date) {
+         String prod_delete, String prod_img, String prod_add_date) {
       super();
       this.prod_num = prod_num;
       this.prod_cat = prod_cat;
       this.prod_name = prod_name;
       this.prod_price = prod_price;
       this.prod_detail = prod_detail;
-      this.prod_size = prod_size;
       this.prod_delete = prod_delete;
       this.prod_img = prod_img;
       this.prod_add_date = prod_add_date;
@@ -59,12 +57,6 @@ public class ProductVO {
    }
    public void setProd_detail(String prod_detail) {
       this.prod_detail = prod_detail;
-   }
-   public String getProd_size() {
-      return prod_size;
-   }
-   public void setProd_size(String prod_size) {
-      this.prod_size = prod_size;
    }
    public String getProd_delete() {
       return prod_delete;
