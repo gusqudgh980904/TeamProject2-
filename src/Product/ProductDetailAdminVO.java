@@ -7,35 +7,37 @@ import java.util.List;
  * @author sist
  */
 public class ProductDetailAdminVO {
-	private int prod_num;
+	private String prod_num;
 	private String prod_name;
-	private int prod_price;
-	private List<String> prod_size;
-	private String prod_img;
-	private int prod_quantity;
+	private String prod_price;
+	private String prod_cat;
 	private String prod_detail;
+	private String prod_img;
+	private String prod_add_date;
+	 private String prod_delete;
 	
 	public ProductDetailAdminVO() {
 		super();
 	}
 
-	public ProductDetailAdminVO(int prod_num, String prod_name, int prod_price, List<String> prod_size, String prod_img,
-			int prod_quantity, String prod_detail) {
+	public ProductDetailAdminVO(String prod_num, String prod_name, String prod_price, String prod_cat,
+			String prod_detail, String prod_img, String prod_add_date, String prod_delete) {
 		super();
 		this.prod_num = prod_num;
 		this.prod_name = prod_name;
 		this.prod_price = prod_price;
-		this.prod_size = prod_size;
-		this.prod_img = prod_img;
-		this.prod_quantity = prod_quantity;
+		this.prod_cat = prod_cat;
 		this.prod_detail = prod_detail;
+		this.prod_img = prod_img;
+		this.prod_add_date = prod_add_date;
+		this.prod_delete = prod_delete;
 	}
 
-	public int getProd_num() {
+	public String getProd_num() {
 		return prod_num;
 	}
 
-	public void setProd_num(int prod_num) {
+	public void setProd_num(String prod_num) {
 		this.prod_num = prod_num;
 	}
 
@@ -47,20 +49,28 @@ public class ProductDetailAdminVO {
 		this.prod_name = prod_name;
 	}
 
-	public int getProd_price() {
+	public String getProd_price() {
 		return prod_price;
 	}
 
-	public void setProd_price(int prod_price) {
+	public void setProd_price(String prod_price) {
 		this.prod_price = prod_price;
 	}
 
-	public List<String> getProd_size() {
-		return prod_size;
+	public String getProd_cat() {
+		return prod_cat;
 	}
 
-	public void setProd_size(List<String> prod_size) {
-		this.prod_size = prod_size;
+	public void setProd_cat(String prod_cat) {
+		this.prod_cat = prod_cat;
+	}
+
+	public String getProd_detail() {
+		return prod_detail;
+	}
+
+	public void setProd_detail(String prod_detail) {
+		this.prod_detail = prod_detail;
 	}
 
 	public String getProd_img() {
@@ -71,21 +81,26 @@ public class ProductDetailAdminVO {
 		this.prod_img = prod_img;
 	}
 
-	public int getProd_quantity() {
-		return prod_quantity;
+	public String getProd_add_date() {
+		return prod_add_date;
 	}
 
-	public void setProd_quantity(int prod_quantity) {
-		this.prod_quantity = prod_quantity;
+	public void setProd_add_date(String prod_add_date) {
+		this.prod_add_date = prod_add_date;
 	}
 
-	public String getProd_detail() {
-		return prod_detail;
+	public String getProd_delete() {
+		return prod_delete;
 	}
 
-	public void setProd_detail(String prod_detail) {
-		this.prod_detail = prod_detail;
+	public void setProd_delete(String prod_delete) {
+		this.prod_delete = prod_delete;
 	}
+
+
+
+
+
 	
 	
 }//class

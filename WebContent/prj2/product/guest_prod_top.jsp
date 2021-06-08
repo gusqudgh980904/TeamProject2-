@@ -23,7 +23,7 @@
 <style type="text/css">
 #wrap{width:  1583px; height: 1580px; margin: 0px auto;} 
 #header{width:  1583px; height: 105px; border-bottom: 1px solid #dddddd;}
-.container{width:  2000px; height: 1000px; padding-left: 100px; }
+.container{width:  2000px; height: 1000px; padding-left: 100px }
 #footer{width:  1583px; height: 475px; border-top: 1px solid #dddddd;} 
 
 table{border-collapse: separate; border-spacing: 20px;}
@@ -122,7 +122,7 @@ ProductListUserVO pluVO = pDAO.selectProductListUser(prod_num);
 			%>
 				<td>
 				<a href="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp?prod_num=<%=pluVO.getProd_num()%>">
-				<img src="http://localhost/team_prj2/common/product_photo/<%=pluVO.getProd_img()%>"/>
+				<img src="http://localhost/team_prj2/common/images/product_photo/<%=pluVO.getProd_img()%>"/>
 				</a>
 				<%i++; %>
 			

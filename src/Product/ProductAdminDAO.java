@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Admin.AdminLBListVO;
+import Admin.AdminUsersAllVO;
 import DBConnection.AdminDBConnection;
+import oracle.jdbc.driver.DBConversion;
 
 /**
  * 상품에 대한 동작을 쿼리문으로 정의하는 클래스
@@ -69,17 +71,17 @@ public class ProductAdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String updateProduct="update PRODUCT\r\n"
-				+ "set  PROD_NAME=?, PROD_PRICE=?, PROD_SIZE=?, PROD_IMAGE=?, PROD_EXPLAIN=?\r\n"
-				+ "where PROD_NUM=?";
+		String updateProduct="update product "
+				+ "set PROD_NAME=?, PROD_PRICE=?, PROD_IMAGE=?, PROD_EXPLAIN=?  "
+				+ "where prod_num=?";
 		
 		pstmt=con.prepareStatement(updateProduct);
 		
 		pstmt.setString(1,pmVO.getProd_name());
-		pstmt.setInt(2,pmVO.getProd_price());
+		pstmt.setString(2,pmVO.getProd_price());
 		pstmt.setString(3,pmVO.getProd_img());
 		pstmt.setString(4,pmVO.getProd_detail());
-		pstmt.setInt(5,pmVO.getProd_num());
+		pstmt.setString(5,pmVO.getProd_num());
 		
 		cnt=pstmt.executeUpdate();
 		
@@ -99,7 +101,7 @@ public class ProductAdminDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int deleteProduct(ProductVO pVO)throws SQLException{
+	public int deleteProduct(String delete,int num)throws SQLException{
 		int cnt=0;
 		
 		Connection con=null;
@@ -114,9 +116,9 @@ public class ProductAdminDAO {
 		
 		pstmt=con.prepareStatement(deleteProduct);
 		
-		pstmt.setString(1,"'Y'");
-		pstmt.setString(2,pVO.getProd_num());
-		
+		pstmt.setString(1,delete);
+		pstmt.setInt(2,num);
+			
 		cnt=pstmt.executeUpdate();
 		
 		}finally {
@@ -128,7 +130,7 @@ public class ProductAdminDAO {
 	
 	
 	/**
-	 * 상품 전체조회
+	 * 룩북 전체조회
 	 * @return
 	 * @throws SQLException
 	 */
@@ -160,6 +162,81 @@ public class ProductAdminDAO {
 		}//finally
 		return list;
 	}//selectAllLookBook
+	
+	
+	/**
+	 * 상품번호를 받아 상품의 상세정보를 보여주는 일
+	 * @param num 상품번호
+	 * @return
+	 * @throws SQLException
+	 */
+	public ProductDetailAdminVO selectProductInfo(int num)throws SQLException{
+		ProductDetailAdminVO pdaVO=null;
+			
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+		con=dc.getConn();
+		
+		String selectProductInfo="select PROD_NUM, PROD_NAME, PROD_PRICE, PROD_CAT, PROD_EXPLAIN,PROD_IMAGE,prod_add_date,prod_delete   "
+				+ "from product "
+				+ "where prod_num=?";
+		
+		pstmt=con.prepareStatement(selectProductInfo);
+		
+		pstmt.setInt(1,num);
+		
+		rs=pstmt.executeQuery();
+		
+		if(rs.next()) {
+			pdaVO=new ProductDetailAdminVO(rs.getString("prod_num"),rs.getString("prod_name"),rs.getString("prod_price"),rs.getString("prod_cat"),rs.getString("prod_explain"),rs.getString("PROD_IMAGE"),rs.getString("prod_add_date"),rs.getString("prod_delete"));
+		}//if
+			
+		}finally {
+			dc.dbClose(con, pstmt, rs);
+		}//finally
+		
+		return pdaVO;
+	}//selectProductInfo
+	
+	
+	/**
+	 * 상품 전체보기
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<ProductListAdminVO> selectProductAll()throws SQLException{
+		List<ProductListAdminVO> list=new ArrayList<ProductListAdminVO>();
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		con=dc.getConn();
+		
+		String selectProductAll="select PROD_NUM, PROD_IMAGE, PROD_NAME, PROD_PRICE, PROD_EXPLAIN, PROD_DELETE "
+				+ "from product "
+				+ "order by prod_num desc";
+		
+		pstmt=con.prepareStatement(selectProductAll);
+		
+		rs=pstmt.executeQuery();
+		
+		ProductListAdminVO plaVO=null;
+		while(rs.next()) {
+			plaVO=new ProductListAdminVO(rs.getString("PROD_NUM"),rs.getString("PROD_NAME"),rs.getString("PROD_PRICE"),rs.getString("PROD_EXPLAIN"),rs.getString("PROD_DELETE"));
+		list.add(plaVO);
+		}//while
+		
+		}finally {
+			dc.dbClose(con, pstmt, rs);
+		}//finally
+		
+		return list;
+	}
 	
 	
 }//class

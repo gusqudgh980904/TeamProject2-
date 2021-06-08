@@ -3,6 +3,7 @@
 <%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +42,8 @@
 	
 	String withdraw = mDAO.selectWithdraw(id);
 	
-	if(!login){	
+	
+	if(!login || withdraw.equals("Y")){	
 %>
 <script type="text/javascript">
 	window.onload = function() {

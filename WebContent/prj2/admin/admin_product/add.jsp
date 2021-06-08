@@ -99,7 +99,7 @@ function chkNull(){
 		return;
 	}//if
 	$("#prod_addFrm").submit();	
-	window.open("http://localhost/team_prj2/prj2/admin/popup/prod_add.jsp","add","width=650,height=380px");
+	
 }//chkNull   
 
 </script>
@@ -152,7 +152,7 @@ function chkNull(){
 						<th>추가날짜</th><td><input type="text" readonly="readonly" name="add_date" id="add_date"placeholder="SYSDATE"></td>
 					</tr>
 					<tr>
-						<th>삭제여부</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="N"/></td>
+						<th>상품상태</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="N"/></td>
 					</tr>
 				</table>
 			

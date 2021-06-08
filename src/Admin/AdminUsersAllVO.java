@@ -10,14 +10,15 @@ public class AdminUsersAllVO {
 	private String member_id;
 	private String member_name;
 	private String member_gender;
-	private Date member_signDate;
+	private String member_signDate;
 	private String member_withdrawal;
 	
 	public AdminUsersAllVO() {
 	}
 
-	public AdminUsersAllVO(String member_id, String member_name, String member_gender, Date member_signDate,
+	public AdminUsersAllVO(String member_id, String member_name, String member_gender, String member_signDate,
 			String member_withdrawal) {
+		super();
 		this.member_id = member_id;
 		this.member_name = member_name;
 		this.member_gender = member_gender;
@@ -49,11 +50,11 @@ public class AdminUsersAllVO {
 		this.member_gender = member_gender;
 	}
 
-	public Date getMember_signDate() {
+	public String getMember_signDate() {
 		return member_signDate;
 	}
 
-	public void setMember_signDate(Date member_signDate) {
+	public void setMember_signDate(String member_signDate) {
 		this.member_signDate = member_signDate;
 	}
 
@@ -64,6 +65,7 @@ public class AdminUsersAllVO {
 	public void setMember_withdrawal(String member_withdrawal) {
 		this.member_withdrawal = member_withdrawal;
 	}
+
 	
 	
 }//class

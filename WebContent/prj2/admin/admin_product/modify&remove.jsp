@@ -1,3 +1,7 @@
+<%@page import="Product.ProductDetailAdminVO"%>
+<%@page import="Product.ProductModifyVO"%>
+<%@page import="Product.ProductAdminDAO"%>
+<%@page import="Product.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -62,18 +66,45 @@ th {
 th{text-align:center;width:100px;background-color:#909090}
 td{text-align:center;width:300px;}
 /* 상품이미지 */
-#prodImg{width:500px;height:500px;position:relative;top:55px;left:400px; border: 1px solid #000000;}
+#prodImg{width:500px;height:500px;position:relative;top:55px;left:400px;}
 /* 상품정보 */
 #prodDetails{width:600px;height:500px;position:relative;left:650px;bottom:450px; margin-left: 350px;}
 </style>
 <script type="text/javascript">
-function modify(){
-	window.open("http://localhost/team_prj2/prj2/admin/popup/prod_modify.jsp","modify","width=650,height=380px")
-}//remove
+$(function(){
 
-function remove(){
-	window.open("http://localhost/team_prj2/prj2/admin/popup/prod_delete.jsp","remove","width=650,height=380px")
-}//remove
+	$("#btnUp").click(function(){
+		chkNull();											
+	})//onclick
+	$("#btnDel").click(function(){
+		prodDelete();											
+	})//onclick
+	
+});//ready
+
+function prodDelete(){
+	alert("상품이 삭제되었습니다");
+	$("#prod_updateFrm").submit();
+}//prodDelete
+
+function chkNull(){
+	if($("#prod_name").val()==""){
+		alert("상품명은 필수입력입니다.");
+		$("#prod_name").focus();
+		return;
+	}//if
+	if($("#price").val()==""){
+		alert("상품가격은 필수입력입니다.");
+		$("#price").focus();
+		return;
+	}//if
+	if($("#prod_detail").val()==""){
+		alert("상품설명은 필수입력입니다.");
+		$("#prod_detail").focus();
+		return;
+	}//if
+	$("#prod_updateFrm").submit();
+}//chkNull
 </script>
 </head>
 <body>
@@ -97,36 +128,47 @@ function remove(){
 	<div id="container">
 	<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
 		<h1 id="title" >상품 삭제/수정</h1>
-						<div id="prodImg">
-				상품이미지			
-				</div>
+		<%
+		ProductAdminDAO paDAO=new ProductAdminDAO();
+		int prod_num=Integer.parseInt(request.getParameter("prod_num"));
+		
+		ProductDetailAdminVO pdaVO=paDAO.selectProductInfo(prod_num);
+		
+		%>
+				<form enctype="multipart/form-data"  id="prod_updateFrm" name="prod_updateFrm" method="post" action="http://localhost/team_prj2/prj2/product_process/product_update_process.jsp">
+						<div id="prodImg"><!-- 이미지 넣기 -->
+						<img src="http://localhost/team_prj2/product_photo/<%=pdaVO.getProd_img()%>"/>
+						<input type="file"name="prod_img"id="prod_img"/>
+						</div> 
 				<table id="prodDetails" class="table table-bordered">
 							<tr>
-						<th>상품번호</th><td><input type="text"  class="form-control"autofocus="autofocus"/></td>				
+						<th>상품번호</th><td><input type="text"  class="form-control" id="prod_num" name="prod_num" readonly="readonly" 
+										placeholder="<%=pdaVO.getProd_num()%>"/></td>				
 					</tr>
 					<tr>
-						<th>상품명</th><td><input type="text"class="form-control" /></td>				
+						<th>상품명</th><td><input type="text"class="form-control" id="prod_name" name="prod_name" autofocus="autofocus" value="<%=pdaVO.getProd_name()%>"/></td>				
 					</tr>
 					<tr>
-						<th>가격</th><td><input type="text"class="form-control" /></td>				
+						<th>가격</th><td><input type="text"class="form-control" id="price" name="price" value="<%=pdaVO.getProd_price()%>" />,를 꼭 입력해주세요</td>				
 					</tr>
 					<tr>
-						<th>구분</th><td>TOP<input type="radio" name="category" value="상의"checked="checked"/><br/>
-										BOTTOM<input type="radio" name="category" value="하의"/></td>				
+						<th>구분</th><td><input type="text" readonly="readonly" name="category" id="category"placeholder="<%=pdaVO.getProd_cat()%>"></td>				
+					</tr>
+			
+					<tr>
+						<th>상품설명</th><td><input type="text"class="form-control" id="prod_detail" name="prod_detail" value="<%=pdaVO.getProd_detail()%>"/></td>				
 					</tr>
 					<tr>
-						<th style="height:150px;">사이즈</th><td>S<input type="checkbox" name="size" value="s"checked="checked"/><br/>
-																M<input type="checkbox" name="size" value="m"/><br/>
-																L<input type="checkbox" name="size" value="l"/>
-						</td>				
+						<th>추가날짜</th><td><input type="text" readonly="readonly" name="add_date" id="add_date"placeholder="<%=pdaVO.getProd_add_date()%>"></td>
 					</tr>
 					<tr>
-						<th>상품설명</th><td><input type="text"class="form-control"  /></td>				
+						<th>상품상태</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="<%=pdaVO.getProd_delete()%>"/></td>
 					</tr>
 				</table>
+			<input type="button" id="btnUp" value="수정" class=" btn btn-group-lg" style="position:relative;left:1380px;bottom:400px;"/>
+			<a href="http://localhost/team_prj2/prj2/product_process/product_delete_process.jsp?prod_delete=Y&prod_num=<%=pdaVO.getProd_num()%>"><input type="button" id="btnDel"value="삭제" class=" btn btn-group-lg" style="position:relative;left:1400px;bottom:400px;"/></a>	
+				</form>
 			
-			<input type="button" value="수정" class=" btn btn-group-lg" style="position:relative;left:1380px;bottom:400px;"onclick="modify()"/>
-			<input type="button" value="삭제" class=" btn btn-group-lg" style="position:relative;left:1400px;bottom:400px;"onclick="remove()"/>	
 	</div>
 </div>
  <!-- footer start -->

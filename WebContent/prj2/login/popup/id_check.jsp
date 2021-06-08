@@ -41,12 +41,12 @@
 		obj.submit(); 
 		
 			<%	
-				String id = request.getParameter("checkTx"); //null 이뜸 var id = ${checkTx}도 null이뜸
-				
+				String id = request.getParameter("checkTx"); //null 이뜸 var id = ${checkTx}도 null이뜸 왜 못받는거지..?
+			
 				MemberDAO mDAO = new MemberDAO();
 				
 				boolean idChk = mDAO.selectDupID(id);
-				System.out.print(id);
+				
 				if(!idChk){
 			%>
 				pObj.id.value = idCheck;
@@ -66,7 +66,7 @@
 <body>
 <div class = "wrap">
 	<div id="header">
-		<form action="id_check.jsp" name = "checkFrm" id="checkFrm" >
+		<form action="id_check.jsp" name = "checkFrm" id="checkFrm" method="post">
 			<h2>ID CHECK<span> 아이디 중복확인</span></h2>
 			<p>사용하고자 하는 아이디를 입력해주세요.<br/>
 			아이디 중복확인 후 사용 가능한 아이디로 선택하시면 됩니다.</p>

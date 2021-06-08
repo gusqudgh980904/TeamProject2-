@@ -38,7 +38,7 @@
 	
 	MemberDAO mDAO = new MemberDAO();
 	
-	boolean login = mDAO.selectLogin(lVO);
+	boolean login = mDAO.selectAdminLogin(lVO);
 	
 	if(!login){
 %>

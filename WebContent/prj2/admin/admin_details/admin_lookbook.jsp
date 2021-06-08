@@ -1,3 +1,5 @@
+<%@page import="Admin.AdminLBDetailVO"%>
+<%@page import="Admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -95,10 +97,17 @@ function remove(){
 <div id="wrap">
 	<div id="container">
 	<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
-		<h1 id="title" >LOOKBOOK 제목</h1>
-			<div id="content">내용
-				<div id="img">이미지</div>
-			
+	<%
+	request.setCharacterEncoding("UTF-8");
+	AdminDAO aDAO=new AdminDAO();
+	int lb_num=Integer.parseInt(request.getParameter("lb_posts_num"));
+	AdminLBDetailVO aldVO=aDAO.selectLookBookOne(lb_num);
+	
+	%>
+		<h1 id="title" ><%=aldVO.getLb_title()%></h1>
+		<h2 style="margin-left:400px">작성자:<%=aldVO.getLb_wirter() %></h2>
+			<div id="content">
+			<%=aldVO.getLb_content()%>
 			</div>
 			
 			<input type="button" value="삭제" class="btn btn-primary"style="position:relative;left:1500px;top:30px;"onclick="remove()"/>

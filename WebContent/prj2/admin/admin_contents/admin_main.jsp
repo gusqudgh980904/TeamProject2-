@@ -1,3 +1,6 @@
+<%@page import="Product.ProductListAdminVO"%>
+<%@page import="java.util.List"%>
+<%@page import="Product.ProductAdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,65 +80,33 @@ th {
     </header>
     <!-- header end -->
 <div id="wrap">
-	<div id="container">
+	<div id="container"style="overflow-y:auto; overflow-x:hidden;" >
 			<a href="http://localhost/team_prj2/prj2/admin/admin_product/add.jsp"><input type="button" value="상품추가" class=" btn btn-group-lg" style="position:relative;left:1100px;top:140px;"/></a>
 			<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
-			<table class="table table-bordered" style="width:1200px;height:500px;position:relative;left:20px;top:80px;">
+			<table class="table table-hover" style=" width:1200px;height:500px;position:relative;left:20px;top:80px;">
+				<tr>
+					<th style="width:80px">상품번호</th>			
+					<th style="width:180px">상품명</th>			
+					<th style="width:80px">가격</th>			
+					<th>상품설명</th>			
+					<th style="width:50px text-weight:80px;">상품상태</th>			
+				</tr>
 				<tr>
 				<%
 				request.setCharacterEncoding("UTF-8");
-				String prod_name=request.getParameter("prod_name");
-				String price=request.getParameter("price");
-				String prod_detail=request.getParameter("prod_detail");
+				ProductAdminDAO paDAO=new ProductAdminDAO();
+				
+				List<ProductListAdminVO> list=paDAO.selectProductAll();
+				int i=0;
+				for(ProductListAdminVO plaVO:list){
 				%>
-					<th>상품번호</th>			
-					<th>이미지</th>			
-					<th>상품명</th>			
-					<th>가격</th>			
-					<th>상품설명</th>			
-				</tr>
-				<tr>
-					<td><a href="http://localhost/team_prj2/prj2/admin/admin_product/modify&remove.jsp?">00001</a></td>
-					<td>img</td>
-					<td><%=prod_name %></td>
-					<td><%=price %></td>
-					<td><%=prod_detail %></td>
-				</tr>
-				<tr>
-					<td>00002</td>
-					<td>img</td>
-					<td>하의</td>
-					<td>90000원</td>
-					<td>저쩌구</td>
-				</tr>
-				<tr>
-					<td>00002</td>
-					<td>img</td>
-					<td>하의</td>
-					<td>90000원</td>
-					<td>저쩌구</td>
-				</tr>
-				<tr>
-					<td>00002</td>
-					<td>img</td>
-					<td>하의</td>
-					<td>90000원</td>
-					<td>저쩌구</td>
-				</tr>
-				<tr>
-					<td>00002</td>
-					<td>img</td>
-					<td>하의</td>
-					<td>90000원</td>
-					<td>저쩌구</td>
-				</tr>
-				<tr>
-					<td>00002</td>
-					<td>img</td>
-					<td>하의</td>
-					<td>90000원</td>
-					<td>저쩌구</td>
-				</tr>
+					<td><a href="http://localhost/team_prj2/prj2/admin/admin_product/modify&remove.jsp?prod_num=<%=plaVO.getProd_num()%>"><%=plaVO.getProd_num() %></a></td>
+					<td><%=plaVO.getProd_name() %></td>
+					<td><%=plaVO.getProd_price()%></td>
+					<td><%=plaVO.getProd_detail() %></td>
+					<td><%=plaVO.getProd_delete() %></td>
+				</tr><tr>
+				<%}//for%>
 			</table>
 	</div>
 </div>

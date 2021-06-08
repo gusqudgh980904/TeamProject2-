@@ -1,3 +1,5 @@
+<%@page import="Admin.AdminUsersOneVO"%>
+<%@page import="Admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -93,38 +95,45 @@ function remove(){
     <!-- header end -->
 <div id="wrap">
 	<div id="container">
+				<%
+				AdminDAO aDAO=new AdminDAO();
+				String member_id=request.getParameter("member_id");
+				
+				AdminUsersOneVO auoVO=aDAO.selectUserOne(member_id);
+				
+				%>
 	<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
-		<h1 id="title" >~~님 회원정보</h1>
+		<h1 id="title" ><%=auoVO.getMember_id() %>님 회원정보</h1>
 				<table class="table table-bordered" id="details">
 				<tr>
-					<th>아이디</th><td></td>
+					<th>아이디</th><td><%=auoVO.getMember_id() %></td>
 				</tr>
 				<tr>
-					<th>이름</th><td></td>
+					<th>이름</th><td><%=auoVO.getMember_name() %></td>
 				</tr>
 				<tr>
-					<th>성별</th><td></td>
+					<th>성별</th><td><%=auoVO.getMember_gender() %></td>
 				</tr>
 				<tr>
-					<th>생년월일</th><td></td>
+					<th>생년월일</th><td><%=auoVO.getMember_birth() %></td>
 				</tr>
 				<tr>
-					<th>연락처</th><td></td>
+					<th>연락처</th><td><%=auoVO.getMember_phone() %></td>
 				</tr>
 				<tr>
-					<th>이메일</th><td></td>
+					<th>이메일</th><td><%=auoVO.getMember_email() %></td>
 				</tr>
 				<tr>
-					<th>우편번호</th><td></td>
+					<th>우편번호</th><td><%=auoVO.getMember_zipcode() %></td>
 				</tr>
 				<tr>
-					<th>상세주소</th><td></td>
+					<th>상세주소</th><td><%=auoVO.getMember_detailedAddr() %></td>
 				</tr>
 				<tr>
-					<th>가입날짜</th><td></td>
+					<th>가입날짜</th><td><%=auoVO.getMember_signDate() %></td>
 				</tr>
 				<tr>
-					<th>탈퇴여부</th><td></td>
+					<th>탈퇴여부</th><td><%=auoVO.getMember_withdrawal() %></td>
 				</tr>
 				
 				</table>

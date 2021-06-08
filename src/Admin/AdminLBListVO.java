@@ -10,13 +10,13 @@ public class AdminLBListVO {
 	private int lb_num;
 	private String lb_title;
 	private String lb_writer;
-	private Date lb_date;
+	private String lb_date;
 	
 	public AdminLBListVO() {
 		super();
 	}
 
-	public AdminLBListVO(int lb_num, String lb_title, String lb_writer, Date lb_date) {
+	public AdminLBListVO(int lb_num, String lb_title, String lb_writer, String lb_date) {
 		super();
 		this.lb_num = lb_num;
 		this.lb_title = lb_title;
@@ -48,13 +48,14 @@ public class AdminLBListVO {
 		this.lb_writer = lb_writer;
 	}
 
-	public Date getLb_date() {
+	public String getLb_date() {
 		return lb_date;
 	}
 
-	public void setLb_date(Date lb_date) {
+	public void setLb_date(String lb_date) {
 		this.lb_date = lb_date;
 	}
+
 	
 	
 }//class

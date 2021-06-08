@@ -1,3 +1,6 @@
+<%@page import="Admin.AdminUsersAllVO"%>
+<%@page import="java.util.List"%>
+<%@page import="Admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -90,40 +93,20 @@ th {
 					<th>탈퇴여부</th>			
 				</tr>
 				<tr>
-					<td><a href="http://localhost/team_prj2/prj2/admin/admin_details/admin_user.jsp">sist1</a></td>
-					<td>현병호</td>
-					<td>남</td>
-					<td>sysdate</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<td>sist2</td>
-					<td>조영래</td>
-					<td>남</td>
-					<td>sysdate</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<td>sist3</td>
-					<td>김다은</td>
-					<td>여</td>
-					<td>sysdate</td>
-					<td>N</td>
-				</tr>
-				<tr>
-					<td>sist4</td>
-					<td>유경우</td>
-					<td>남</td>
-					<td>sysdate</td>
-					<td>N</td>
-				</tr>
-				<tr>
-					<td>sist5</td>
-					<td>이예림</td>
-					<td>여</td>
-					<td>sysdate</td>
-					<td>Y</td>
-				</tr>
+			<%
+			request.getParameter("UTF-8");
+			AdminDAO aDAO=new AdminDAO();
+			List<AdminUsersAllVO> list=aDAO.selectUsersAll();
+			
+			for(AdminUsersAllVO auaVO:list){
+			%>
+					<td><a href="http://localhost/team_prj2/prj2/admin/admin_details/admin_user.jsp?member_id=<%=auaVO.getMember_id()%>"><%=auaVO.getMember_id()%></a></td>
+					<td><%=auaVO.getMember_name()%></td>
+					<td><%=auaVO.getMember_gender()%></td>
+					<td><%=auaVO.getMember_signDate()%></td>
+					<td><%=auaVO.getMember_withdrawal()%></td>
+				</tr><tr>
+				<%}//for %>
 			</table>
 	</div>
 </div>

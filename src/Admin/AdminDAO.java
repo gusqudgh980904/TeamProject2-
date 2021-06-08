@@ -72,20 +72,18 @@ public class AdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String selectOneuser="select MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_ZIPCODE, MEMBER_ADDR, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_BIRTH, MEMBER_SIGN_DATE,MEMBER_DETAILED_ADDR\r\n"
-				+ "from member"
-				+ "where member_id=?";
-		
-		pstmt=con.prepareStatement(selectOneuser);
+		String selectOneuser="select MEMBER_ID, MEMBER_NAME, MEMBER_GENDER, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_ZIPCODE, MEMBER_DETAILED_ADDR, MEMBER_SIGN_DATE, MEMBER_WITHDRAWAL from member where member_id=?";
+				
+				pstmt=con.prepareStatement(selectOneuser);
 		
 		pstmt.setString(1,member_id);
 		
 		rs=pstmt.executeQuery();
 		
 		if(rs.next()) {
-			auoVO=new AdminUsersOneVO(rs.getString("member_id"),rs.getString("member_name"),rs.getString("member_phone"),rs.getInt("member_zipcode")
-									,rs.getString("member_addr"),rs.getString("member_detailedAddr"),rs.getString("member_email")
-									,rs.getString("member_gender"),rs.getString("member_birth"),rs.getDate("member_signDate"),rs.getString("member_withdrawal"));
+			auoVO=new AdminUsersOneVO(rs.getString("member_id"),rs.getString("member_name"),rs.getString("MEMBER_GENDER"),rs.getString("MEMBER_BIRTH")
+									,rs.getString("MEMBER_PHONE"),rs.getString("MEMBER_EMAIL"),rs.getInt("MEMBER_ZIPCODE")
+									,rs.getString("MEMBER_DETAILED_ADDR"),rs.getString("MEMBER_SIGN_DATE"),rs.getString("MEMBER_WITHDRAWAL"));
 		}//if
 		
 		}finally {
@@ -111,8 +109,7 @@ public class AdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String selectAllusers="select MEMBER_ID,MEMBER_NAME, MEMBER_GENDER,MEMBER_SIGN_DATE,member_withdrawal"
-								+ "from member";
+		String selectAllusers="select MEMBER_ID, MEMBER_NAME, MEMBER_GENDER, MEMBER_SIGN_DATE, MEMBER_WITHDRAWAL from member";
 		
 		pstmt=con.prepareStatement(selectAllusers);
 		
@@ -121,7 +118,7 @@ public class AdminDAO {
 		AdminUsersAllVO auaVO=null;
 		while(rs.next()) {
 			auaVO=new AdminUsersAllVO(rs.getString("member_id"),rs.getString("member_name"),rs.getString("member_gender")
-							,rs.getDate("member_signDate"),rs.getString("member_withdrawal"));
+							,rs.getString("member_sign_Date"),rs.getString("member_withdrawal"));
 		list.add(auaVO);
 		}//while
 		
@@ -148,16 +145,15 @@ public class AdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String selectAlllookbook="select LB_POSTS_NUM, LB_TITLE, MEMBER_ID, LB_WRITE_DATE\r\n"
-								+ "from lookbook";
-		
+		String selectAlllookbook="select lb_posts_num,LB_TITLE, MEMBER_ID, LB_WRITE_DATE from lookbook order by lb_posts_num";
+				
 		pstmt=con.prepareStatement(selectAlllookbook);
 		
 		rs=pstmt.executeQuery();
 		
 		AdminLBListVO allVO=null;
 		while(rs.next()) {
-			allVO=new AdminLBListVO(rs.getInt("lb_num"),rs.getString("lb_title"),rs.getString("lb_writer"),rs.getDate("lb_date"));
+			allVO=new AdminLBListVO(rs.getInt("lb_posts_num"),rs.getString("lb_title"),rs.getString("MEMBER_ID"),rs.getString("LB_WRITE_DATE"));
 			list.add(allVO);
 		}//while
 		
@@ -185,9 +181,7 @@ public class AdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String selectlookbookOne="select LB_TITLE, LB_CONTENTS, LB_IMAGES\r\n"
-				+ "from lookbook\r\n"
-				+ "where LB_POSTS_NUM=?";
+		String selectlookbookOne="select LB_POSTS_NUM, LB_TITLE, MEMBER_ID,LB_CONTENTS from lookbook where LB_POSTS_NUM=?";
 		
 		pstmt=con.prepareStatement(selectlookbookOne);
 		
@@ -196,7 +190,7 @@ public class AdminDAO {
 		rs=pstmt.executeQuery();
 		
 		if(rs.next()) {
-			aldVO=new AdminLBDetailVO(rs.getString("lb_title"),rs.getString("lb_content"),rs.getString("lb_img"));
+			aldVO=new AdminLBDetailVO(rs.getInt("LB_POSTS_NUM"),rs.getString("LB_TITLE"),rs.getString("member_id"),rs.getClob("LB_CONTENTS"));
 		}//if
 		
 		}finally {

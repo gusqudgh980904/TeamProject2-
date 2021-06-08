@@ -1,3 +1,6 @@
+<%@page import="Admin.AdminLBListVO"%>
+<%@page import="java.util.List"%>
+<%@page import="Admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -80,42 +83,24 @@ th {
 <div id="wrap">
 	<div id="container">
 			<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
-			<table class="table table-bordered" style="width:1200px;height:500px;position:relative;left:20px;top:80px;">
+			<table class="table table-hover" style="width:1200px;height:500px;position:relative;left:20px;top:80px;">
 				<tr>
 					<th style="width:800px">제목</th>			
 					<th style="width:300px">작성자</th>			
 					<th style="width:100px">작성날짜</th>			
 				</tr>
 				<tr>
-					<td><a href="http://localhost/team_prj2/admin/admin_details/admin_lookbook.jsp">와 옷 대박</a></td>
-					<td>sist1</td>
-					<td>sysdate</td>
-				</tr>
-				<tr>
-					<td>와 옷 대박</td>
-					<td>sist1</td>
-					<td>sysdate</td>
-				</tr>
-				<tr>
-					<td>와 옷 대박</td>
-					<td>sist1</td>
-					<td>sysdate</td>
-				</tr>
-				<tr>
-					<td>와 옷 대박</td>
-					<td>sist1</td>
-					<td>sysdate</td>
-				</tr>
-				<tr>
-					<td>와 옷 대박</td>
-					<td>sist1</td>
-					<td>sysdate</td>
-				</tr>
-				<tr>
-					<td>와 옷 대박</td>
-					<td>sist1</td>
-					<td>sysdate</td>
-				</tr>
+				<% 
+				request.setCharacterEncoding("UTF-8");
+				AdminDAO aDAO=new AdminDAO();
+				List<AdminLBListVO> list=aDAO.selectLookBookAll();
+				for(AdminLBListVO alVO:list){
+				%>
+					<td><a href="http://localhost/team_prj2/prj2/admin/admin_details/admin_lookbook.jsp?lb_posts_num=<%=alVO.getLb_num()%>"><%=alVO.getLb_title() %></a></td>
+					<td><%=alVO.getLb_writer() %></td>
+					<td><%=alVO.getLb_date() %></td>
+				</tr><tr>
+				<%}//for %>
 			</table>
 	</div>
 </div>

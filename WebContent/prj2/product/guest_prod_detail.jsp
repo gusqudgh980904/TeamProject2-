@@ -33,14 +33,45 @@
 #prodName{font-size:20px;}
 #price{font-size: 30px;}
 </style>
-<script type="text/javascript">
-
-</script>
-<%
-
-%>
 </head>
-<body>
+<body onload="init()">
+<script type="text/javascript">
+var sell_price;
+var amount;
+
+function init () {
+	sell_price = document.frm.sell_price.value;
+	amount = document.frm.amount.value;
+	document.frm.sum.value = sell_price;
+	change();
+}
+
+function add () {
+	hm = document.frm.amount;
+	sum = document.frm.sum;
+	hm.value ++ ;
+	sum.value = parseInt(hm.value) * sell_price;
+}
+
+function del () {
+	hm = document.frm.amount;
+	sum = document.frm.sum;
+		if (hm.value > 1) {
+			hm.value -- ;
+			sum.value = parseInt(hm.value) * sell_price;
+		}
+}
+
+function change () {
+	hm = document.frm.amount;
+	sum = document.frm.sum;
+
+		if (hm.value < 0) {
+			hm.value = 0;
+		}
+	sum.value = parseInt(hm.value) * sell_price;
+}  
+</script>
 	<!-- header start -->
     <header class="header">
         <div class="main_nav">
@@ -97,21 +128,26 @@
 				int prod_num=Integer.parseInt(request.getParameter("prod_num"));
 				
 				ProductDetailUserVO pduVO = pDAO.selectProductUser(prod_num);
-				%>
-				<img src="http://localhost/team_prj2/common/product_photo/<%=pduVO.getProd_img()%>"/>
+				
+						%>
+				<img src="http://localhost/team_prj2/common/images/product_photo/<%=pduVO.getProd_img()%>"/>
 				</td>
 			</tr>
 			</table>
 			</div>
 			
 			<div id="prodDetail">
-			<form>
+			<form name="frm" action="#">
 			<table id="tabDetail" style="top: 200px;">
 			<tr class="inside_border" id=prodName>
 				<th colspan="2"><%=pduVO.getProd_name() %></th>
 			</tr>
 			<tr>
-				<th colspan="2" id="price"><%=pduVO.getProd_price() %>원</th>
+				<th colspan="2" id="price">
+				<input type="hidden" name="img" value="http://localhost/team_prj2/common/product_photo/<%=pduVO.getProd_img()%>">
+				<input type="hidden" name="sell_price" value="<%=Integer.parseInt(pduVO.getProd_price().replace(",","")));//연산할 값%>">
+				<input type="text" value="<%=pduVO.getProd_price()%>"
+				style="text-align:right;">원</th>
 			</tr>		
 			<tr>
 				<td colspan="2"><%=pduVO.getProd_explain() %></td>
@@ -119,7 +155,7 @@
 			<tr class="inside_border">
 				<th>사이즈</th>
 				<td>
-				<select>
+				<select name="size">
 					<option>S</option>
 					<option>M</option>
 					<option>L</option>
@@ -129,16 +165,17 @@
 			<tr class="inside_border">
 				<th>수량</th>
 				<td>
-				<input type="button" class="btn" value="-">
-				<input type="text" value="1" style="width: 30px;">
-				<input type="button" class="btn" value="+">
-				<!-- <input type="number" value="1" min="0" max="10" id="txtQuantity"> -->
+				<input type="button" value="-" class="btn btn-secondary" onclick="del();">
+				<input type="text" style="width: 30px;text-align: center;" value="1" onchange="change();"id="quantity" name="amount">
+				<input type="button" value="+" class="btn btn-secondary" onclick="add();">
+				
+				<!-- <input type="number" value="1" min="1" max="10" id="quantity" name="quantity" onchange="change();"> -->
 				</td>
 			</tr>
 			<tr class="inside_border">
 				<th>총결제금액</th>
 				<th>
-				<input type="text" readonly="readonly"<%=pduVO.getProd_price() %>>원
+				<input type="text" readonly="readonly" name="sum" style="text-align:right">원
 				</th>
 			</tr>
 					<tr>
