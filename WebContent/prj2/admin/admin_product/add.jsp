@@ -152,7 +152,7 @@ function chkNull(){
 						<th>추가날짜</th><td><input type="text" readonly="readonly" name="add_date" id="add_date"placeholder="SYSDATE"></td>
 					</tr>
 					<tr>
-						<th>상품상태</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="N"/></td>
+						<th>삭제여부</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="N"/></td>
 					</tr>
 				</table>
 			

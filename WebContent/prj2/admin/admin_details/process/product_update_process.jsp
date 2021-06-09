@@ -51,6 +51,9 @@
 					price,
 					prod_detail,
 					prod_img);
+			
+			System.out.println( pmVO );
+			
 			ProductAdminDAO paDAO=new ProductAdminDAO();
 			 int cnt=paDAO.updateProduct(pmVO);
 			try{

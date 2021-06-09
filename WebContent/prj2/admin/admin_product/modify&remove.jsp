@@ -77,7 +77,9 @@ $(function(){
 		chkNull();											
 	})//onclick
 	$("#btnDel").click(function(){
+		if(confirm("정말삭제하시겠습니까?")){
 		prodDelete();											
+		}			
 	})//onclick
 	
 });//ready
@@ -143,7 +145,7 @@ function chkNull(){
 				<table id="prodDetails" class="table table-bordered">
 							<tr>
 						<th>상품번호</th><td><input type="text"  class="form-control" id="prod_num" name="prod_num" readonly="readonly" 
-										placeholder="<%=pdaVO.getProd_num()%>"/></td>				
+										value="<%=pdaVO.getProd_num()%>"/></td>				
 					</tr>
 					<tr>
 						<th>상품명</th><td><input type="text"class="form-control" id="prod_name" name="prod_name" autofocus="autofocus" value="<%=pdaVO.getProd_name()%>"/></td>				
@@ -162,7 +164,7 @@ function chkNull(){
 						<th>추가날짜</th><td><input type="text" readonly="readonly" name="add_date" id="add_date"placeholder="<%=pdaVO.getProd_add_date()%>"></td>
 					</tr>
 					<tr>
-						<th>상품상태</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="<%=pdaVO.getProd_delete()%>"/></td>
+						<th>삭제여부</th><td><input type="text" readonly="readonly" name="withdrwal" id="withdrwal" placeholder="<%=pdaVO.getProd_delete()%>"/></td>
 					</tr>
 				</table>
 			<input type="button" id="btnUp" value="수정" class=" btn btn-group-lg" style="position:relative;left:1380px;bottom:400px;"/>

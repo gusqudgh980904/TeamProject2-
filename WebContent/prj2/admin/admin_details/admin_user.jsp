@@ -138,7 +138,7 @@ function remove(){
 				
 				</table>
 			
-			<input type="button" value="탈퇴" class="btn btn-primary" style="position:relative;left:1500px;top:20px" onclick="remove()"/>
+			<a href="http://localhost/team_prj2/prj2/admin/admin_details/process/user_delete_process.jsp?user_delete=Y&member_id=<%=auoVO.getMember_id()%>"><input type="button" value="탈퇴" class="btn btn-primary" style="position:relative;left:1500px;top:20px"/></a>
 	</div>
 </div>
  <!-- footer start -->

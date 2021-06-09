@@ -28,7 +28,7 @@ public class AdminDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int deleteUser(AdminUsersOneVO auoVO)throws SQLException {
+	public int deleteUser(String delete,String member_id)throws SQLException {
 	int cnt=0;
 		
 	Connection con=null;
@@ -37,14 +37,14 @@ public class AdminDAO {
 	try {
 	con=dc.getConn();
 	
-	String deleteUser="update member "
-			+ "set member_withdrawal=? "
-			+ "where=?";
+	String deleteUser="update member\r\n "
+			+ "set member_withdrawal=?\r\n "
+			+ "where member_id=?";
 	
 	pstmt=con.prepareStatement(deleteUser);
 	
-	pstmt.setString(1,"'Y'");
-	pstmt.setString(2,auoVO.getMember_id());
+	pstmt.setString(1,delete);
+	pstmt.setString(2,member_id);
 	
 	cnt=pstmt.executeUpdate();
 	}finally {
@@ -54,6 +54,33 @@ public class AdminDAO {
 	
 	return cnt;
 	}//deleteUsers
+	
+	
+	public int deleteLookBook(int post_num)throws SQLException{
+	int cnt=0;
+	
+	Connection con=null;
+	PreparedStatement pstmt=null;
+	
+	try {
+		con=dc.getConn();
+		
+		String deleteLookBook="DELETE FROM lookbook WHERE lb_posts_num=?";
+		
+		pstmt=con.prepareStatement(deleteLookBook);
+		
+		pstmt.setInt(1,post_num);
+		
+		cnt=pstmt.executeUpdate();
+		
+	}finally {
+		
+		dc.dbClose(con, pstmt, null);
+		
+	}//finally
+	
+	return cnt;	
+	}//deleteLookBook
 	
 	
 	/**
@@ -181,7 +208,7 @@ public class AdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String selectlookbookOne="select LB_POSTS_NUM, LB_TITLE, MEMBER_ID,LB_CONTENTS from lookbook where LB_POSTS_NUM=?";
+		String selectlookbookOne="select LB_POSTS_NUM,LB_TITLE,MEMBER_ID,LB_CONTENTS from lookbook where LB_POSTS_NUM=?";
 		
 		pstmt=con.prepareStatement(selectlookbookOne);
 		
@@ -190,7 +217,7 @@ public class AdminDAO {
 		rs=pstmt.executeQuery();
 		
 		if(rs.next()) {
-			aldVO=new AdminLBDetailVO(rs.getInt("LB_POSTS_NUM"),rs.getString("LB_TITLE"),rs.getString("member_id"),rs.getClob("LB_CONTENTS"));
+			aldVO=new AdminLBDetailVO(rs.getInt("LB_POSTS_NUM"),rs.getString("LB_TITLE"),rs.getString("member_id"),rs.getString ("LB_CONTENTS"));
 		}//if
 		
 		}finally {

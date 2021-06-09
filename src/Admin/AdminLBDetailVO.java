@@ -1,6 +1,5 @@
 package Admin;
 
-import java.sql.Clob;
 
 /**
  * 관리자의 룩북 게시글 상세조회 클래스
@@ -10,14 +9,12 @@ public class AdminLBDetailVO {
 	private int lb_num;
 	private String lb_title;
 	private String lb_wirter;
-	private Clob lb_content;
+	private String lb_content;
 	
 	public AdminLBDetailVO() {
-		super();
 	}
 
-	public AdminLBDetailVO(int lb_num, String lb_title, String lb_wirter, Clob lb_content) {
-		super();
+	public AdminLBDetailVO(int lb_num, String lb_title, String lb_wirter, String  lb_content) {
 		this.lb_num = lb_num;
 		this.lb_title = lb_title;
 		this.lb_wirter = lb_wirter;
@@ -48,13 +45,14 @@ public class AdminLBDetailVO {
 		this.lb_wirter = lb_wirter;
 	}
 
-	public Clob getLb_content() {
+	public String  getLb_content() {
 		return lb_content;
 	}
 
-	public void setLb_content(Clob lb_content) {
+	public void setLb_content(String  lb_content) {
 		this.lb_content = lb_content;
 	}
+
 
 	
 }//class

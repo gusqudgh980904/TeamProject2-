@@ -41,7 +41,7 @@
 		int cnt=paDAO.deleteProduct(prod_delete,prod_num);
 		
 			if(cnt==1){
-			response.sendRedirect("http://localhost/team_prj2/prj2/admin/admin_contents/admin_main.jsp");	
+			response.sendRedirect("http://localhost/team_prj2/prj2/admin/admin_contents/admin_lookbooks.jsp");	
 			}else{
 			%>
 			삭제도중 문제가 생겼습니다.

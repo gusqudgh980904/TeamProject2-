@@ -53,7 +53,7 @@ public class ProductModifyVO {
 	}
 	public void setProd_img(String prod_img) {
 		this.prod_img = prod_img;
-	}
+	}  
 	
 	
 	

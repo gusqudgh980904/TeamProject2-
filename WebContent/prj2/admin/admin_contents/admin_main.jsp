@@ -89,7 +89,7 @@ th {
 					<th style="width:180px">상품명</th>			
 					<th style="width:80px">가격</th>			
 					<th>상품설명</th>			
-					<th style="width:50px text-weight:80px;">상품상태</th>			
+					<th style="width:50px text-weight:80px;">삭제여부</th>			
 				</tr>
 				<tr>
 				<%

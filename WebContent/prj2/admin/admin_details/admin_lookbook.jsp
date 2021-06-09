@@ -104,14 +104,13 @@ function remove(){
 	AdminLBDetailVO aldVO=aDAO.selectLookBookOne(lb_num);
 	
 	%>
-		<h1 id="title" ><%=aldVO.getLb_title()%></h1>
+		<h1 id="title" >제목:<%=aldVO.getLb_title()%></h1>
 		<h2 style="margin-left:400px">작성자:<%=aldVO.getLb_wirter() %></h2>
 			<div id="content">
 			<%=aldVO.getLb_content()%>
 			</div>
 			
-			<input type="button" value="삭제" class="btn btn-primary"style="position:relative;left:1500px;top:30px;"onclick="remove()"/>
-			
+			<a href="http://localhost/team_prj2/prj2/admin/admin_details/process/lookbook_delete_process.jsp?lb_num=<%=aldVO.getLb_num()%>"><input type="button" value="삭제" class="btn btn-primary"style="position:relative;left:1500px;top:30px;"/></a>
 	</div>
 </div>
  <!-- footer start -->
