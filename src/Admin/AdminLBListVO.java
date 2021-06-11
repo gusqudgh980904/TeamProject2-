@@ -1,6 +1,6 @@
 package Admin;
 
-import java.util.Date;
+
 
 /**
  * 관리자가 게시판관리를 눌렀을 때 보여줄 게시글 리스트 클래스

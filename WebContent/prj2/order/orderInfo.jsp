@@ -1,5 +1,32 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="Order.OrderSimpleVO"%>
+<%@page import="Order.OrderDAO"%>
+<%@page import="Product.ProductDetailUserVO"%>
+<%@page import="Product.ProductListUserVO"%>
+<%@page import="Product.ProductVO"%>
+<%@page import="Product.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+String id = (String)session.getAttribute("id");
+	request.setCharacterEncoding("UTF-8");
+	int num = Integer.parseInt(request.getParameter("prod_num")); //상품번호
+	
+	ProductDAO pDAO = new ProductDAO();
+	ProductDetailUserVO pduVO = pDAO.selectProductUser(num); //주문한 상품정보 select
+	
+	int sum = Integer.parseInt(request.getParameter("sum")); //총가격
+	String ori_price = request.getParameter("ori_price"); //가격
+	int amount = Integer.parseInt(request.getParameter("amount")); //수량
+	String size=request.getParameter("size"); //사이즈
+	String member_id= (String)session.getAttribute("id"); //회원아이디
+	//pduVO = pDAO.selectProductUser(num);\
+	
+	OrderDAO oDAO=new OrderDAO(); 
+	OrderSimpleVO osVO = new OrderSimpleVO(member_id, num, size, sum, amount);
+	oDAO.insertOrder(osVO); //테이블에 insert	
+%>    
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,10 +45,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- bootstrap -->
 <script src="http://localhost/team_prj2/common/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+function logout(){
+     if( confirm("정말 로그아웃 하시겠습니까?")){
+     	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
+</script>
 <style type="text/css">
-table{border-collapse: separate; border-spacing: 0 10px;}
-#order{width: 1100px;height:200px;border-top:1px solid #dfdfdf; border-bottom:1px solid #dfdfdf; text-align: center;}
-h3{text-align: Left; font-weight:bold;}
+	table{border-collapse: separate; border-spacing: 0 10px;}
+	#order{width: 1100px;height:200px;border-top:1px solid #dfdfdf; border-bottom:1px solid #dfdfdf; text-align: center;}
+	h3{text-align: Left; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -31,29 +65,48 @@ h3{text-align: Left; font-weight:bold;}
             <div>
                 <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <%                    
+                    if( id == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
                                 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
                                 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
                                 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                                c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
                     </svg>
-                    </a>
+                  </a>  
+                    <%
+                     	} else {
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -66,20 +119,40 @@ h3{text-align: Left; font-weight:bold;}
             </ul>
         </div>
     </header>
-    <!-- header end -->
+<!-- header end --> 
     <section>
      <!-- container start -->
         <div class="container" style="overflow:auto;">
         	<!-- LookBook Header -->
         	<h3>주문내역</h3>
         	<table id="order">
+        	<tr>
+        		<td align="left">
+        		<td align="left">이미지</td>
+        		<td align="left">상품이름</td>
+        		<td align="left">가격</td>
+        		<td align="left">사이즈</td>
+        		<td align="left">수량</td>
+        		<td align="left">총가격</td>
+        		<td align="left">상품번호</td>
+			</tr>
+			<%
+				if(pduVO!= null){
+			%>
 			<tr>
         		<td align="left">
-        		<img src="http://211.63.89.134/team_prj2/common/images/img1.png"/></td>
-        		<td align="left"><strong>검정 베이직 스타일 반팔티</strong></td>
-        		<td align="left">18,000원</td>
-        		<td align="left">1개</td>
+        		<td align="left"><img src="http://localhost/team_prj2/common/images/product_photo/<%=pduVO.getProd_img()%>" width="150" height="150"/></td>
+        		<td align="left"><%= pduVO.getProd_name() %></td>
+        		<td align="left"><%= ori_price %></td>
+        		<td align="left"><%= size %></td>
+        		<td align="left"><%= amount %></td>
+        		<td align="left"><%= sum %></td>
+        		<td align="left"><%= pduVO.getProd_num() %></td>
 			</tr>
+			<%
+				
+				} 
+			%>
         	</table>
 			<div style="padding-top : 30px; padding-left: 450px">
         		<input type="button" value="계속 쇼핑하기" class="btn btn-success" onclick="location.href='http://localhost/team_prj2/prj2/main/main_all.jsp'"/>

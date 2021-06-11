@@ -5,53 +5,65 @@ package Order;
  * @author sist
  */
 public class OrderSimpleVO {
-	private int order_num;
-	private String prod_name;
-	private int prod_price;
-	private int prod_quantity;
+	private String Member_id;
+	private int prod_num;
+	private String order_size;
+	private int order_price;
+	private int order_quantity;
 	
 	public OrderSimpleVO() {
 		super();
 	}
 
-	public OrderSimpleVO(int order_num, String prod_name, int prod_price, int prod_quantity) {
+	public OrderSimpleVO(String member_id, int prod_num, String order_size, int order_price, int order_quantity) {
 		super();
-		this.order_num = order_num;
-		this.prod_name = prod_name;
-		this.prod_price = prod_price;
-		this.prod_quantity = prod_quantity;
+		Member_id = member_id;
+		this.prod_num = prod_num;
+		this.order_size = order_size;
+		this.order_price = order_price;
+		this.order_quantity = order_quantity;
 	}
 
-	public int getOrder_num() {
-		return order_num;
+	public String getMember_id() {
+		return Member_id;
 	}
 
-	public void setOrder_num(int order_num) {
-		this.order_num = order_num;
+	public void setMember_id(String member_id) {
+		Member_id = member_id;
 	}
 
-	public String getProd_name() {
-		return prod_name;
+	public int getProd_num() {
+		return prod_num;
 	}
 
-	public void setProd_name(String prod_name) {
-		this.prod_name = prod_name;
+	public void setProd_num(int prod_num) {
+		this.prod_num = prod_num;
 	}
 
-	public int getProd_price() {
-		return prod_price;
+	public String getOrder_size() {
+		return order_size;
 	}
 
-	public void setProd_price(int prod_price) {
-		this.prod_price = prod_price;
+	public void setOrder_size(String order_size) {
+		this.order_size = order_size;
 	}
 
-	public int getProd_quantity() {
-		return prod_quantity;
+	public int getOrder_price() {
+		return order_price;
 	}
 
-	public void setProd_quantity(int prod_quantity) {
-		this.prod_quantity = prod_quantity;
+	public void setOrder_price(int order_price) {
+		this.order_price = order_price;
 	}
+
+	public int getOrder_quantity() {
+		return order_quantity;
+	}
+
+	public void setOrder_quantity(int order_quantity) {
+		this.order_quantity = order_quantity;
+	}
+
+	
 	
 }//class

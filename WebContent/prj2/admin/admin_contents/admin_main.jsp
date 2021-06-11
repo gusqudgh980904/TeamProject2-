@@ -26,6 +26,7 @@
 <style type="text/css">
 .header{
 	z-index: 1;
+	position:relative;
 }
 .title{
 	margin-top : 20px;
@@ -42,7 +43,7 @@
 
 #wrap {
 	width: 1250px;
-	height: 900px;
+	height: 1200px;
 	margin: 0px auto;
 	background-color: #dfdfdf;
 }
@@ -56,13 +57,28 @@ th {
 	background-color: #909090
 }
 
-
 </style>
-<script type="text/javascript">
+<!-- 아이디받는 세션 없으면 이것또한 복붙 이건 위에 지시자 밑에 정의하믄댐-->
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 세션
+	String userId = (String)session.getAttribute("id");
+%>
 
+
+
+<!-- logout메소드 복붙하세용 -->
+<script type="text/javascript">
+	function logout(){
+	     if( confirm("정말 로그아웃 하시겠습니까?")){
+	     	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+		}
+	}
 </script>
-</head>
+
+
+
 <body>
+<!-- 헤더 복붙하세용 -->
 <!-- header start -->
     <header class="header">
         <div class="main_nav">
@@ -74,11 +90,44 @@ th {
                     <li><a href="http://localhost/team_prj2/prj2/admin/admin_contents/admin_lookbooks.jsp" style="color: black">게시판목록</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/admin/admin_contents/admin_main.jsp" style="color: black">상품관리</a></li>
                 </ul>
-                
             </div>
+            <ul class="icons">
+                <li>
+                    <p>login</p>
+                    <%                    
+                    if( userId == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/main/main_all.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a>  
+                    <%
+                     	}else{
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
+                </li>
+            </ul>
         </div>
     </header>
-    <!-- header end -->
+<!-- header end --> 
 <div id="wrap">
 	<div id="container"style="overflow-y:auto; overflow-x:hidden;" >
 			<a href="http://localhost/team_prj2/prj2/admin/admin_product/add.jsp"><input type="button" value="상품추가" class=" btn btn-group-lg" style="position:relative;left:1100px;top:140px;"/></a>
@@ -87,6 +136,7 @@ th {
 				<tr>
 					<th style="width:80px">상품번호</th>			
 					<th style="width:180px">상품명</th>			
+					<th style="width:80px">구분</th>			
 					<th style="width:80px">가격</th>			
 					<th>상품설명</th>			
 					<th style="width:50px text-weight:80px;">삭제여부</th>			
@@ -102,6 +152,7 @@ th {
 				%>
 					<td><a href="http://localhost/team_prj2/prj2/admin/admin_product/modify&remove.jsp?prod_num=<%=plaVO.getProd_num()%>"><%=plaVO.getProd_num() %></a></td>
 					<td><%=plaVO.getProd_name() %></td>
+					<td><%=plaVO.getProd_cat() %></td>
 					<td><%=plaVO.getProd_price()%></td>
 					<td><%=plaVO.getProd_detail() %></td>
 					<td><%=plaVO.getProd_delete() %></td>

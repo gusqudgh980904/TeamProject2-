@@ -14,7 +14,7 @@ public class UserDBConnection {
 
 	private static UserDBConnection udc;
 	
-	private UserDBConnection() {
+	private UserDBConnection() {	
 		
 	}//AdminDBConnection
 	
@@ -22,10 +22,10 @@ public class UserDBConnection {
 		if(udc == null) {
 			udc = new UserDBConnection();
 		}//end if
-		
 		return udc;
 	}//getInstance
 	
+	//DBCP를 사용한 DB연동 METHOD
 	public Connection getConn() throws SQLException{
 		Connection conn = null;
 		//1. JNDI 객체 생성
@@ -42,6 +42,7 @@ public class UserDBConnection {
 		return conn;
 	}//Connection
 	
+	//DB 연결 끊기 METHOD
 	public void dbClose(Connection conn, PreparedStatement pstmt, ResultSet rs) throws SQLException{
 		if(rs != null) {rs.close();}//end if
 		if(pstmt != null) {pstmt.close();}//end if

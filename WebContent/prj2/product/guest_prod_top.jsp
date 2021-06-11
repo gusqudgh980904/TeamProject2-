@@ -6,6 +6,10 @@
 <%@page import="Product.ProductListUserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 세션
+	String userId = (String)session.getAttribute("id");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,62 +36,62 @@ td:hover {background-color:#dfdfdf;}
 h3{text-align: center; font-style:italic;}
 </style>
 <script type="text/javascript">
-
+function logout(){
+    if( confirm("정말 로그아웃 하시겠습니까?")){
+    	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
 </script>
-<%
-
-/* //parameter 값 받기
-int prod_num = Integer.parseInt(request.getParameter("prod_num"));
-ProductVO pv=new ProductVO();
-pv.setProd_num(prod_num);
-//DAO단의 클래스를 사용하여 DB작업 수행
-ProductDAO pDAO = new ProductDAO();
-ProductListUserVO pluVO = pDAO.selectProductListUser(pv); 
-System.out.println("dskfajl"+pluVO); */
-
-/* String num = request.getParameter("prod_num");
-int prod_num = Integer.parseInt(num);
-ProductListUserVO pluVO = new ProductListUserVO();
-pluVO.setProd_num(num);
-//DB 작업 수행
-ProductDAO pDAO = new ProductDAO();
-ProductListUserVO pluVO = pDAO.selectProductListUser(prod_num);
- */
-
- 
-%>
-
 </head>
 <body>
-	<!-- header start -->
+<!-- header start -->
     <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <%                    
+                    if( userId == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
                                 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
                                 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
                                 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                                c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
                     </svg>
-                    </a>
+                  </a>  
+                    <%
+                     	} else {
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -100,12 +104,12 @@ ProductListUserVO pluVO = pDAO.selectProductListUser(prod_num);
             </ul>
         </div>
     </header>
-    <!-- header end -->
+<!-- header end --> 
     <section>
     <!-- container start -->
         <div class="container" style="overflow-y:auto; overflow-x:hidden;">
 		<div>
-		<h3>Brand New !</h3>
+		<h3><strong>Brand New !</strong></h3>
 			
 			<div >
 			<form action="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp" method="post">

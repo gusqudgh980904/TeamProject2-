@@ -1,4 +1,4 @@
-
+<%@page import="Member.AdminLoginVO"%>
 <%@page import="Member.MemberDAO"%>
 <%@page import="Member.LoginVO"%>
 <%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
@@ -34,11 +34,11 @@
 	
 	pass=DataEncrypt.messageDigest("MD5", pass);
 	
-	LoginVO lVO = new LoginVO(id,pass);
+	AdminLoginVO alVO = new AdminLoginVO(id,pass);
 	
 	MemberDAO mDAO = new MemberDAO();
 	
-	boolean login = mDAO.selectAdminLogin(lVO);
+	boolean login = mDAO.selectAdminLogin(alVO);
 	
 	if(!login){
 %>

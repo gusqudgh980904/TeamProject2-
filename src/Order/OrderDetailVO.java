@@ -6,8 +6,9 @@ package Order;
  */
 public class OrderDetailVO {
 	private int prod_num;
+	private String member_id;
 	private String prod_name;
-	private int prod_price;
+	private String prod_price;
 	private int order_num;
 	private String order_size;
 	private int order_quantity;
@@ -16,10 +17,11 @@ public class OrderDetailVO {
 		super();
 	}
 
-	public OrderDetailVO(int prod_num, String prod_name, int prod_price, int order_num, String order_size,
-			int order_quantity) {
+	public OrderDetailVO(int prod_num, String member_id, String prod_name, String prod_price, int order_num,
+			String order_size, int order_quantity) {
 		super();
 		this.prod_num = prod_num;
+		this.member_id = member_id;
 		this.prod_name = prod_name;
 		this.prod_price = prod_price;
 		this.order_num = order_num;
@@ -35,6 +37,14 @@ public class OrderDetailVO {
 		this.prod_num = prod_num;
 	}
 
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
 	public String getProd_name() {
 		return prod_name;
 	}
@@ -43,11 +53,11 @@ public class OrderDetailVO {
 		this.prod_name = prod_name;
 	}
 
-	public int getProd_price() {
+	public String getProd_price() {
 		return prod_price;
 	}
 
-	public void setProd_price(int prod_price) {
+	public void setProd_price(String prod_price) {
 		this.prod_price = prod_price;
 	}
 
@@ -74,6 +84,6 @@ public class OrderDetailVO {
 	public void setOrder_quantity(int order_quantity) {
 		this.order_quantity = order_quantity;
 	}
-	
+
 	
 }//class

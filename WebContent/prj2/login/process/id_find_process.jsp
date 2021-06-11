@@ -40,12 +40,20 @@
 	
 	IDFindVO idFVO = mDAO.selectSearchID(sIVO);
 	
-	String id = idFVO.getMember_id(); //오류뜸
-	String signDate = idFVO.getMember_signDate(); //오류뜸
+	session.setMaxInactiveInterval(60*5);
+	session.setAttribute("id", idFVO.getMember_id());
+	session.setAttribute("signDate", idFVO.getMember_signDate());
+	session.setAttribute("name", name);
+		
+	
 %>
-
-<%= id %>
-<%= signDate %>
+<script type="text/javascript">
+	window.onload = function() {
+		window.open("http://localhost/team_prj2/prj2/login/popup/id_find.jsp"
+				,"Fail","width = 640, height = 387, top ="+(window.sceenTop+100)+",left =" +(window.creenleft + 100));
+		window.location = document.referrer;
+}
+</script>
 
 
 </div>

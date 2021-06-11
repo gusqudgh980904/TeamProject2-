@@ -1,7 +1,15 @@
+<%@page import="LookBook.LBWriteVO"%>
+<%@page import="LookBook.LBDAO"%>
+<%@page import="javax.swing.JOptionPane"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 공통 JSP
+	String userId = (String)session.getAttribute("id");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,42 +29,80 @@
 <!-- bootstrap -->
 <script src="http://localhost/team_prj2/common/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 <style type="text/css">
-table{border-collapse: separate; border-spacing: 10px 10px;}
-h2,h3{text-align: center; font-weight:bold;}
-.text{width: 1185px;height:600px;border:1px solid #dfdfdf;}
-.view{width: 1185px;height:600px;}
+	table{border-collapse: separate; border-spacing: 10px 10px;  }
+	h2,h3{text-align: center; font-weight:bold;}
+	.text{width: 1185px;height:600px;border:1px solid #dfdfdf;}
+	.view{width: 1185px;height:600px;}
+	.text_right{text-align:right;}	
+	
 </style>
+<script type="text/javascript">
+window.onload=function(){
+	ocument.getElementById("writeCmt").addEventListener("click", sendView);
+}//onload
+
+function cancel(){
+	 if( confirm("정말 게시글을 삭제 하시겠습니까?")){
+     window.location.href ="http://localhost/team_prj2/prj2/lookbook/process/lookbook_delete_process.jsp";
+   }
+}
+
+function logout(){
+    if( confirm("정말 로그아웃 하시겠습니까?")){
+    	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
+</script>
 </head>
 <body>
 <!-- header start -->
-    <header class="header">
+     <header class="header">
         <div class="main_nav">
             <div>
                 <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <%                    
+                    if( userId == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
                                 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
                                 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
                                 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                                c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
                     </svg>
-                    </a>
+                  </a>  
+                    <%
+                     	} else {
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -75,42 +121,70 @@ h2,h3{text-align: center; font-weight:bold;}
         <div class="container">
         <%
 	    	request.setCharacterEncoding("UTF-8");
-
-        	String title=request.getParameter("title");
-        	String content=request.getParameter("editordata");
-        %>
+			
+        	String num=request.getParameter("num"); 
+        
+    		session.setAttribute("num", num);
+        	      	
+        	if(num == null){
+        		JOptionPane.showMessageDialog(null, "해당하는 게시물이 없습니다.");
+        		%>
+        		<script type="text/javascript">
+        			window.location.href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp";
+        		</script>
+        		<%
+        		
+        	} else {
+        		LBDAO lbDAO = new LBDAO();
+        		LBWriteVO lbwVO = new LBWriteVO();
+        		
+        		int lb_num = Integer.parseInt(num);
+        		lbwVO = lbDAO.selectOnePost(lb_num);
+        		
+        		%>
         	<!-- LookBook Header -->
-        	<h2><%=title %></h2>
+        	<h2></h2>       	
+        	<div  style="justify-content: center; display: flex; flex-direction: column; align-items: center;">
         	<table>
         	<tr>
-        		<td>
-        			<div class="view" style="overflow:auto;">
-			        	<%=content %>
+				<th> 
+	        		<span style="font-size:1.3em; ">작성자 : <%= lbwVO.getLbw_id() %></span>	        	 	
+        			<span style="font-size:1.3em; padding-left: 905px ">작성일 : <%= lbwVO.getLbw_write_date() %></span><br/>	       
+        		</th>
+        		
+        		
+        	</tr>	
+        	<tr>
+        		<td>		        
+        			<div class="view" style="overflow:auto; font-size:1.3em; border: 1px solid; overflow: auto; border-radius: 10px" >
+        				<%= lbwVO.getLbw_content() %>
         			</div>
         		</td>
         	</tr>
+        	
         	<tr>
         		<td>
-        			<input type="text" placeholder="댓글 내용" style="width:1185px" readonly="readonly"/></td>
-        		<td><input type="button" value="삭제" class="btn btn-danger"/></td>
+        			<input type="text" placeholder="댓글 내용" style="width:1128px" readonly="readonly"/>
+        		<input type="button" value="삭제" class="btn btn-danger" id="deleteCmt"/></td>
         	</tr>
         	<tr>
         		<td>
-        			<textarea placeholder="댓글을 작성해주세요" style="resize:none; width:1185px; height:80px"></textarea>
-        		</td>
-        		<td><input type="button" value="등록" class="btn btn-primary"/></td>
+        			<textarea placeholder="댓글을 작성해주세요" style="resize:none; width:1128px; height:80px; "></textarea>
+        		
+        		<input type="button" value="등록" class="btn btn-primary" id="writeCmt" style="height: 80px"/></td>
         	</tr>
         	<tr>
-        		<td></td>
-        		<td onclick="location.href='http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp'">
-        			<input type="button" value="목록" class="btn btn-info"/>
-        		</td>
-        		<td onclick="location.href='http://localhost/team_prj2/prj2/lookbook/lookbook_revise.jsp'">
-        			<input type="button" value="수정" class="btn btn-info"/>
+        		<td style="padding-left: 1015px">
+        			<input type="button" value="수정" class="btn btn-info" <%= lbwVO.getLbw_id().equals(userId) ?"":"style='display: none;'"%> onclick="location.href='http://localhost/team_prj2/prj2/lookbook/lookbook_revise.jsp?num=<%= lb_num %>'"/>
+        			<input type="button" value="삭제" class="btn btn-info" <%= lbwVO.getLbw_id().equals(userId) ?"":"style='display: none;'"%> onclick="cancel();"/>
+        			<input  type="button" value="목록" class="btn btn-info" onclick="location.href='http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp'"/>
         		</td>
         	</tr>
         	</table>
-        	
+        	</div>
+        	<%
+        		}//end else
+       		%>  
         </div>
     </section>
     <!-- container end -->

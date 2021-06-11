@@ -1,6 +1,12 @@
+<%@page import="Product.ProductListUserVO"%>
+<%@page import="java.util.List"%>
+<%@page import="Product.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 세션
+	String userId = (String)session.getAttribute("id");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +22,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
     <title>상하의STREET</title>
-    <script type="text/javascript">
-
+<script type="text/javascript">
+function logout(){
+     if( confirm("정말 로그아웃 하시겠습니까?")){
+     	location.href="logout.jsp";
+	}
+}
 </script>
 <style>
+.header{
+	z-index: 1;
+}
 .title{
 	margin-top : 20px;
+	z-index: 1;
 }
 .best_title {
 	display: flex;
@@ -54,7 +68,15 @@
 	
 }
 
+.bestItems{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+
 .slider{
+	z-index: 0;
     width: 1200px;
     height: 600px;
     position: relative;
@@ -67,35 +89,58 @@
 </head>
 
 <body>
+<form id = "mainFrm" action="main_all.jsp">
 	<!-- header start -->
     <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
+                   
+               
                 <li>
                     <p>login</p>
-                    <a href="">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <%
+                    
+                    if( userId == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
                                 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
                                 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
                                 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                                c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
                     </svg>
-                    </a>
+                  </a>  
+                    <%
+                     	} else {
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -135,18 +180,56 @@
         <!-- bestitem start -->
 				<div class="main_bestitem">
 				<h1 class="best_title">BEST ITEM</h1>
-				<div class= "best_imgs">
-					<div class="item">1</div>
-					<div class="item">2</div>
-					<div class="item">3</div>
-					<div class="item">4</div>
-				</div> 
-				<div class= "best_imgs2">
-					<div class="item">5</div>
-					<div class="item">6</div>
-					<div class="item">7</div>
-					<div class="item">8</div>
-				</div> 
+		<div class = "bestItems" >
+			<form action="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp" method="post">
+			<table >
+			
+			<tr>
+			<%	
+				ProductDAO pDAO = new ProductDAO();
+				List<ProductListUserVO> list = pDAO.selectProductTopListUser();
+				int i=0;
+				for(ProductListUserVO pluVO : list){
+					if(i<4){ %>
+				<td>
+				<a href="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp?prod_num=<%=pluVO.getProd_num()%>">
+				<img src="http://localhost/team_prj2/common/images/product_photo/<%=pluVO.getProd_img()%>"class="item"/>
+				</a>
+				<%i++; %>
+				</td>
+				<% if(i%4==0){
+				%>
+			</tr><tr>
+			<%}//if%>
+			<%}//if%>
+			<%}//for%>
+			</table>
+			</form>
+			</div>
+		<div class = "bestItems">
+			<table >
+			<tr>
+			<%	
+				request.setCharacterEncoding("UTF-8");
+				ProductDAO pDAODao = new ProductDAO();
+				List<ProductListUserVO> list2 = pDAO.selectProductBottomListUser();
+				int z=0;
+				for(ProductListUserVO pluVO : list2){
+					if(z<4){ %>
+				<td>
+				<a href="http://localhost/team_prj2/prj2/product/guest_prod_detail.jsp?prod_num=<%=pluVO.getProd_num()%>">
+				<img src="http://localhost/team_prj2/common/images/product_photo/<%=pluVO.getProd_img()%>" class="item"/>
+				</a>
+				<%z++;%>
+				</td>
+				<% if(z%4==0){
+				%>
+			</tr><tr>
+			<%}//if%>
+			<%}//if%>
+			<%}//for%>
+			</table>
+			</div>
        	 </div>
         </div>
         <!-- bestitem end -->
@@ -187,5 +270,6 @@
         </div>
     </footer>
     <!-- footer end -->
+</form>
 </body>
 </html>

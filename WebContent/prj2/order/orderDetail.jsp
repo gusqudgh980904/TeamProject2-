@@ -1,5 +1,14 @@
+<%@page import="Order.OrderDAO"%>
+<%@page import="Order.OrderSimpleVO"%>
+<%@page import="Order.OrderDetailVO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%
+
+ //	int order_num = 1;
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +27,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- bootstrap -->
 <script src="http://localhost/team_prj2/common/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+function logout(){
+    if( confirm("정말 로그아웃 하시겠습니까?")){
+    	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
+</script>
+<% 
+String id = (String)session.getAttribute("id");
+	OrderSimpleVO osVO = new OrderSimpleVO();
+	osVO.setMember_id(id);
+	OrderDAO oDAO = new OrderDAO();
+	List<OrderDetailVO> list = oDAO.selectOrder(osVO);
+
+%>
 <style type="text/css">
 table{border-collapse: separate; border-spacing: 0 10px;}
 th{text-align:center;}
@@ -28,34 +52,53 @@ h2{text-align: Left; font-weight:bold;}
 </head>
 <body>
 <!-- header start -->
-    <header class="header">
+<header class="header">
         <div class="main_nav">
             <div>
                 <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <%                    
+                    if( id == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
                                 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
                                 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
                                 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                                c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
                     </svg>
-                    </a>
+                  </a>  
+                    <%
+                     	} else {
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -76,20 +119,30 @@ h2{text-align: Left; font-weight:bold;}
         	<h2>Order Details</h2>
         	<table id="order">
 			<tr>
-        		<th>상품번호</th>
-        		<th>상품이름</th>
+        		<th>주문번호</th>
+        		<th>갯수</th>
         		<th>사이즈</th>
-        		<th>수량</th>
+        		<th>이름</th>
+        		<th>상품번호</th>
         		<th>가격</th>
 			</tr>
+<% 
+		int i=0;
+		for(OrderDetailVO odVO : list){
+%>
 			<tr>
-				<td>1</td>
-				<td>옷</td>
-				<td>100</td>
-				<td>1</td>
-				<td>18,000원</td>
+				<td><%= odVO.getOrder_num() %></td>
+				<td><%= odVO.getOrder_quantity() %></td>
+				<td><%= odVO.getOrder_size() %></td>
+				<td><%= odVO.getProd_name() %></td>
+				<td><%= odVO.getProd_num() %></td>
+				<td><%= odVO.getProd_price() %></td>
 			</tr>
-        	</table>
+			<%i++; %>        	
+<% 
+ 		}
+%>        	
+	</table>
 	        <div style="padding-top : 30px; padding-left: 450px">
 	        	<input type="button" value="메인으로" class="btn btn-success" onclick="location.href='http://localhost/team_prj2/prj2/main/main_all.jsp'"/>
 			</div>

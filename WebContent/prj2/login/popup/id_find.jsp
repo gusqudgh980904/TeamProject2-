@@ -1,7 +1,17 @@
 <%@page import="Member.IDFindVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String id = (String)session.getAttribute("id");
+	String signDate = (String)session.getAttribute("signDate");
+	String name = (String)session.getAttribute("name");
+	
+	if(id == null){  
+	response.sendRedirect("http://localhost/team_prj2/prj2/login/login.jsp");
+	return;
+} 
 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,8 +62,8 @@ $(function(){
 			<div >
 				<img src="http://localhost/team_prj2/prj2/login/popup_img/blue_v.PNG" alt="img_fail" >
 			</div>
-			<h4><strong style="font-size: 25px">홍길동</strong>님 아이디 찾기가 완료 되었습니다.</h4>
-			<p>가입하신 ID는 <span id ="span">UserId</span> 입니다.<br/>(가입일 : 20XX - XX - XX)</p>
+			<h4><strong style="font-size: 25px"><%= name %></strong>님 아이디 찾기가 완료 되었습니다.</h4>
+			<p>가입하신 ID는 <span id ="span"><%= id %></span> 입니다.<br/>(가입일 : <%= signDate %>)</p>
 			<div id="line"></div><br/>
 				<div id = "btDiv">
 					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px" id = "pw">비밀번호 찾기</button>

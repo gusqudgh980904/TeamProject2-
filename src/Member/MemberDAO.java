@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
+import DBConnection.AdminDBConnection;
 import DBConnection.UserDBConnection;
 import kr.co.sist.util.cipher.DataEncrypt;
 
@@ -87,6 +86,41 @@ public class MemberDAO {
 			
 		}finally {
 			dc.dbClose(con, pstmt, rs);
+		}
+		return  login;
+	}
+	
+	/**
+	 * 관리자 로그인
+	 * @param lVO
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean selectAdminLogin(AdminLoginVO alVO) throws SQLException{
+		boolean login = false;
+		
+		AdminDBConnection adc = AdminDBConnection.getInstance();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = adc.getConn();
+			
+			String selectQuery  = "select ADMIN_ID, ADMIN_PW from ADMIN where ADMIN_ID =? and ADMIN_PW =?";
+			pstmt = con.prepareStatement(selectQuery);
+			
+			pstmt.setString(1, alVO.getMember_id());
+			pstmt.setString(2, alVO.getMember_pw());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				login = true;
+			}
+			
+		}finally {
+			adc.dbClose(con, pstmt, rs);
 		}
 		return  login;
 	}

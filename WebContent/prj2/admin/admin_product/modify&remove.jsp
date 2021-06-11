@@ -70,19 +70,25 @@ td{text-align:center;width:300px;}
 /* 상품정보 */
 #prodDetails{width:600px;height:500px;position:relative;left:650px;bottom:450px; margin-left: 350px;}
 </style>
+<!-- 아이디받는 세션 없으면 이것또한 복붙 이건 위에 지시자 밑에 정의하믄댐-->
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 세션
+	String userId = (String)session.getAttribute("id");
+%>
 <script type="text/javascript">
 $(function(){
 
 	$("#btnUp").click(function(){
 		chkNull();											
 	})//onclick
-	$("#btnDel").click(function(){
-		if(confirm("정말삭제하시겠습니까?")){
-		prodDelete();											
-		}			
-	})//onclick
 	
 });//ready
+
+function logout(){
+    if( confirm("정말 로그아웃 하시겠습니까?")){
+    	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
 
 function prodDelete(){
 	alert("상품이 삭제되었습니다");
@@ -107,25 +113,64 @@ function chkNull(){
 	}//if
 	$("#prod_updateFrm").submit();
 }//chkNull
+function logout(){
+    if( confirm("정말 로그아웃 하시겠습니까?")){
+    	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
 </script>
 </head>
 <body>
+<!-- 헤더 복붙하세용 -->
 <!-- header start -->
     <header class="header">
         <div class="main_nav">
             <div>
                 <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/%EC%83%81%ED%95%98%EC%9D%98%EC%8A%A4%ED%8A%B8%EB%A6%BF.png"></a></h1>
                 <ul class="navigation">
-                <li> <a href="" style="color: black">메인홈</a></li>
+                   <li> <a href="http://localhost/team_prj2/prj2/main/main_all.jsp" style="color: black">메인홈</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/admin/admin_contents/admin_users.jsp" style="color: black">회원목록</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/admin/admin_contents/admin_lookbooks.jsp" style="color: black">게시판목록</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/admin/admin_contents/admin_main.jsp" style="color: black">상품관리</a></li>
                 </ul>
-                
             </div>
+            <ul class="icons">
+                <li>
+                    <p>login</p>
+                    <%                    
+                    if( userId == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/main/main_all.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a>  
+                    <%
+                     	}else{
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
+                </li>
+            </ul>
         </div>
     </header>
-    <!-- header end -->
+<!-- header end --> 
 <div id="wrap">
 	<div id="container">
 	<h1 id="headerTitle">SANGHAUI STREET ADMINISTRATOR</h1>
@@ -137,7 +182,7 @@ function chkNull(){
 		ProductDetailAdminVO pdaVO=paDAO.selectProductInfo(prod_num);
 		
 		%>
-				<form enctype="multipart/form-data"  id="prod_updateFrm" name="prod_updateFrm" method="post" action="http://localhost/team_prj2/prj2/product_process/product_update_process.jsp">
+				<form enctype="multipart/form-data"  id="prod_updateFrm" name="prod_updateFrm" method="post" action="http://localhost/team_prj2/prj2/admin/admin_details/process/product_update_process.jsp">
 						<div id="prodImg"><!-- 이미지 넣기 -->
 						<img src="http://localhost/team_prj2/product_photo/<%=pdaVO.getProd_img()%>"/>
 						<input type="file"name="prod_img"id="prod_img"/>
@@ -168,7 +213,7 @@ function chkNull(){
 					</tr>
 				</table>
 			<input type="button" id="btnUp" value="수정" class=" btn btn-group-lg" style="position:relative;left:1380px;bottom:400px;"/>
-			<a href="http://localhost/team_prj2/prj2/product_process/product_delete_process.jsp?prod_delete=Y&prod_num=<%=pdaVO.getProd_num()%>"><input type="button" id="btnDel"value="삭제" class=" btn btn-group-lg" style="position:relative;left:1400px;bottom:400px;"/></a>	
+			<a href="http://localhost/team_prj2/prj2/admin/admin_details/process/product_delete_process.jsp?prod_delete=Y&prod_num=<%=pdaVO.getProd_num()%>"><input type="button" id="btnDel"value="삭제" class=" btn btn-group-lg" style="position:relative;left:1400px;bottom:400px;"/></a>	
 				</form>
 			
 	</div>

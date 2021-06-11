@@ -34,7 +34,7 @@
 <body>
 		<%
 			request.setCharacterEncoding("UTF-8");
-			String savePath="C:/dev/workspace/team_prj2/WebContent/product_photo/";
+			String savePath="C:/dev/workspace/team_prj2/WebContent/common/images/product_photo/";
 			int maxSize=500*500*7;
 			MultipartRequest mr
 			=new MultipartRequest(request,savePath,maxSize,"UTF-8",new DefaultFileRenamePolicy());
@@ -52,7 +52,6 @@
 					prod_detail,
 					prod_img);
 			
-			System.out.println( pmVO );
 			
 			ProductAdminDAO paDAO=new ProductAdminDAO();
 			 int cnt=paDAO.updateProduct(pmVO);

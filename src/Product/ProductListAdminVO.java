@@ -7,6 +7,7 @@ package Product;
 public class ProductListAdminVO {
 	private String prod_num;
 	private String prod_name;
+	private String prod_cat;
 	private String prod_price;
 	private String prod_detail;
 	private String prod_delete;
@@ -15,14 +16,23 @@ public class ProductListAdminVO {
 		super();
 	}
 
-	public ProductListAdminVO(String prod_num, String prod_name, String prod_price, String prod_detail,
+	public ProductListAdminVO(String prod_num, String prod_name,String prod_cat, String prod_price, String prod_detail,
 			String prod_delete) {
 		super();
 		this.prod_num = prod_num;
 		this.prod_name = prod_name;
+		this.prod_cat = prod_cat;
 		this.prod_price = prod_price;
 		this.prod_detail = prod_detail;
 		this.prod_delete = prod_delete;
+	}
+
+	public String getProd_cat() {
+		return prod_cat;
+	}
+
+	public void setProd_cat(String prod_cat) {
+		this.prod_cat = prod_cat;
 	}
 
 	public String getProd_num() {

@@ -2,11 +2,8 @@
     pageEncoding="UTF-8"%>
 <%
 	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 공통 JSP
-	String userId = (String)session.getAttribute("id");
-	if(userId == null){  
-		response.sendRedirect("http://localhost/team_prj2/prj2/login/login.jsp");
-		return;
-	}
+	String joinId = (String)session.getAttribute("joinId");
+	String name = (String)session.getAttribute("name");
 %>
 <!DOCTYPE html>
 <html>
@@ -55,6 +52,8 @@
 	function home(){
 		location.href = "http://localhost/team_prj2/prj2/main/main_all.jsp";
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -63,8 +62,8 @@
             <div>
                 <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
@@ -106,8 +105,8 @@
 						<img id ="imgV" src="http://localhost/team_prj2/prj2/login/popup_img/green_v.PNG" alt="img_fail" >
 					</div>
 					<div id ="mainFont">
-						<h4><strong style="font-size: 40px">홍길동</strong>님의 회원가입을 축하합니다.</h4>
-						<p>가입하신 ID는<span id ="span"> <%= userId %> </span>입니다.</p>
+						<h4><strong style="font-size: 40px"><%= name %></strong>님의 회원가입을 축하합니다.</h4>
+						<p>가입하신 ID는<span id ="span"> <%= joinId %> </span>입니다.</p>
 						<div id="line"></div><br/>
 					</div>
 				<div id = "btDiv">

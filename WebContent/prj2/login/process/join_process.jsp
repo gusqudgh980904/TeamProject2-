@@ -32,7 +32,8 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <%
-	String id=request.getParameter("id");
+	String joinId=request.getParameter("id");
+	
 	String pass=request.getParameter("pass");
 	String name=request.getParameter("name");
 	int zipcode=Integer.parseInt(request.getParameter("zipcode")) ;
@@ -59,13 +60,14 @@
 	
 <%
 	
-	MemberVO mVO = new MemberVO(id, pass, name, phone, email, zipcode, addr, detailedAddr, gender, birth, signDate, withdrawsal);
+	MemberVO mVO = new MemberVO(joinId, pass, name, phone, email, zipcode, addr, detailedAddr, gender, birth, signDate, withdrawsal);
 
 	MemberDAO mDAO = new MemberDAO();
 	
 	try{
 		session.setMaxInactiveInterval(60*5);
-		session.setAttribute("id", id);
+		session.setAttribute("joinId", joinId);
+		session.setAttribute("name", name);
 		
 		mDAO.insertMember(mVO);
 		response.sendRedirect("../join_success.jsp");

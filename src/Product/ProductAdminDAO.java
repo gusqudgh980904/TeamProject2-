@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Admin.AdminLBListVO;
 import DBConnection.AdminDBConnection;
 
 /**
@@ -31,7 +30,7 @@ public class ProductAdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String insertProduct="insert into PRODUCT values (PROD_NUM_SEQ.NEXTVAL,?,?,?,?,?,?,?)";
+		String insertProduct="insert into PRODUCT values (PROD_NUM.NEXTVAL,?,?,?,?,?,?,?)";
 		
 							
 		
@@ -128,41 +127,6 @@ public class ProductAdminDAO {
 	
 	
 	/**
-	 * 룩북 전체조회
-	 * @return
-	 * @throws SQLException
-	 */
-	public List<ProductVO> selectLookBookAll()throws SQLException{
-		List<ProductVO> list=new ArrayList<ProductVO>();
-		
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		
-		try {
-		con=dc.getConn();
-		
-		String selectAllProduct="SELECT PROD_NUM, PROD_CAT, PROD_NAME, PROD_PRICE, PROD_EXPLAIN, PROD_SIZE, PROD_ADD_DATE, PROD_DELTE, PROD_IMAGE\r\n"
-				+ "from PRODUCT";
-		
-		pstmt=con.prepareStatement(selectAllProduct);
-		
-		rs=pstmt.executeQuery();
-		
-		AdminLBListVO allVO=null;
-		while(rs.next()) {
-//			allVO=new ProductVO();
-//			list.add(allVO);
-		}//while
-		
-		}finally {
-			dc.dbClose(con, pstmt, rs);
-		}//finally
-		return list;
-	}//selectAllLookBook
-	
-	
-	/**
 	 * 상품번호를 받아 상품의 상세정보를 보여주는 일
 	 * @param num 상품번호
 	 * @return
@@ -215,7 +179,7 @@ public class ProductAdminDAO {
 		try {
 		con=dc.getConn();
 		
-		String selectProductAll="select PROD_NUM, PROD_IMAGE, PROD_NAME, PROD_PRICE, PROD_EXPLAIN, PROD_DELETE "
+		String selectProductAll="select PROD_NUM, PROD_NAME, PROD_cat, PROD_PRICE, PROD_EXPLAIN, PROD_DELETE "
 				+ "from product "
 				+ "order by prod_num desc";
 		
@@ -225,7 +189,7 @@ public class ProductAdminDAO {
 		
 		ProductListAdminVO plaVO=null;
 		while(rs.next()) {
-			plaVO=new ProductListAdminVO(rs.getString("PROD_NUM"),rs.getString("PROD_NAME"),rs.getString("PROD_PRICE"),rs.getString("PROD_EXPLAIN"),rs.getString("PROD_DELETE"));
+			plaVO=new ProductListAdminVO(rs.getString("PROD_NUM"),rs.getString("PROD_NAME"),rs.getString("PrOD_cat"),rs.getString("PROD_PRICE"),rs.getString("PROD_EXPLAIN"),rs.getString("PROD_DELETE"));
 		list.add(plaVO);
 		}//while
 		

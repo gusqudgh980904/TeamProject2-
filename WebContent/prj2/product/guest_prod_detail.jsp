@@ -2,6 +2,10 @@
 <%@page import="Product.ProductDetailUserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//사용자 로그인 한 이후의 아이디 데이터를 필요한 페이지에서 사용하기 위한 세션
+	String userId = (String)session.getAttribute("id");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,13 +48,20 @@ function init () {
 	amount = document.frm.amount.value;
 	document.frm.sum.value = sell_price;
 	change();
+	
+	
 }
+
 
 function add () {
 	hm = document.frm.amount;
 	sum = document.frm.sum;
+	if(hm.value<10){
 	hm.value ++ ;
 	sum.value = parseInt(hm.value) * sell_price;
+	}else{
+		alert("최대 10개까지 구입하실 수 있습니다.");
+	}
 }
 
 function del () {
@@ -71,36 +82,71 @@ function change () {
 		}
 	sum.value = parseInt(hm.value) * sell_price;
 }  
+
+$(document).on('keyup','input[inputmode=numeric]',function(event){
+	this.value = this.value.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
+	this.value = this.value.replace(/,/g,'');          // ,값 공백처리
+	this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식을 이용해서 3자리 마다 , 추가 	
+}); 
+function logout(){
+    if( confirm("정말 로그아웃 하시겠습니까?")){
+    	location.href="http://localhost/team_prj2/prj2/main/logout.jsp";
+	}
+}
+
+
+	
+
 </script>
-	<!-- header start -->
+
+<!-- header start -->
     <header class="header">
         <div class="main_nav">
             <div>
-                <h1 class="title"><a href="#"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
+                <h1 class="title"><a href="http://localhost/team_prj2/prj2/main/main_all.jsp"><img src="http://localhost/team_prj2/common/images/상하의스트릿.png"></a></h1>
                 <ul class="navigation">
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">TOP</a></li>
-                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod.jsp" style="color: black">BOTTOM</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_top.jsp" style="color: black">TOP</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/product/guest_prod_bottom.jsp" style="color: black">BOTTOM</a></li>
                     <li><a href="http://localhost/team_prj2/prj2/lookbook/lookbook_main.jsp" style="color: black">LOOKBOOK</a></li>
-                    <li><a href="" style="color: black">MYPAGE</a></li>
+                    <li><a href="http://localhost/team_prj2/prj2/login/member.jsp" style="color: black">MYPAGE</a></li>
                 </ul>
             </div>
             <ul class="icons">
                 <li>
                     <p>login</p>
-                    <a href="">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                    <%                    
+                    if( userId == null  ){
+                    %>
+                    <a href="http://localhost/team_prj2/prj2/login/login.jsp">
+                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
                             <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
                                 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
                                 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
                                 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
-                                c59.551,0,108,48.448,108,108S315.551,256,256,256z"/>
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
                     </svg>
-                    </a>
+                  </a>  
+                    <%
+                     	} else {
+                     %>
+                     <a href="#" onclick="javascript:logout();">
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" >
+                            <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+                                C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+                                c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+                                h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+                                c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                    </svg>
+                  </a> 
+                    <%
+                    	}
+                    %>    
                 </li>
                 <li>
                     <p>cart</p>
-                    <a href="">
+                    <a href="http://localhost/team_prj2/prj2/order/orderDetail.jsp">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="m472 452c0 11.046-8.954 20-20 20h-20v20c0 11.046-8.954 20-20 20s-20-8.954-20-20v-20h-20c-11.046 
                         0-20-8.954-20-20s8.954-20 20-20h20v-20c0-11.046 8.954-20 20-20s20 8.954 20 20v20h20c11.046 0 20 8.954 20 20zm0-312v192c0 
@@ -113,7 +159,7 @@ function change () {
             </ul>
         </div>
     </header>
-    <!-- header end -->
+<!-- header end --> 
     <section>
     <!-- container start -->
         <div class="container">
@@ -137,17 +183,19 @@ function change () {
 			</div>
 			
 			<div id="prodDetail">
-			<form name="frm" action="#">
+			<form name="frm" action="http://localhost/team_prj2/prj2/order/orderInfo.jsp" method="post">
 			<table id="tabDetail" style="top: 200px;">
 			<tr class="inside_border" id=prodName>
 				<th colspan="2"><%=pduVO.getProd_name() %></th>
 			</tr>
 			<tr>
 				<th colspan="2" id="price">
-				<input type="hidden" name="img" value="http://localhost/team_prj2/common/product_photo/<%=pduVO.getProd_img()%>">
-				<input type="hidden" name="sell_price" value="<%=Integer.parseInt(pduVO.getProd_price().replace(",","")));//연산할 값%>">
+				<input type="hidden" name="img" value="http://localhost/team_prj2/common/images/product_photo/<%=pduVO.getProd_img()%>">
+				<input type="hidden" name="sell_price"
+						value="<%=Integer.parseInt(pduVO.getProd_price().replace(",","")));//연산할 값%>">
+				<input type="hidden" name="prod_num" value="<%=pduVO.getProd_num()%>">
 				<input type="text" value="<%=pduVO.getProd_price()%>"
-				style="text-align:right;">원</th>
+				style="text-align:right; width: 150px;" name="ori_price">원</th>
 			</tr>		
 			<tr>
 				<td colspan="2"><%=pduVO.getProd_explain() %></td>
@@ -166,21 +214,21 @@ function change () {
 				<th>수량</th>
 				<td>
 				<input type="button" value="-" class="btn btn-secondary" onclick="del();">
-				<input type="text" style="width: 30px;text-align: center;" value="1" onchange="change();"id="quantity" name="amount">
-				<input type="button" value="+" class="btn btn-secondary" onclick="add();">
-				
-				<!-- <input type="number" value="1" min="1" max="10" id="quantity" name="quantity" onchange="change();"> -->
+				<input type="text" readonly="readonly" style="width: 30px;text-align: center;" 
+				value="1"  maxlength="1" onchange="change();"id="quantity" name="amount">
+				<input type="button" value="+" class="btn btn-secondary" onclick="add();" >
 				</td>
 			</tr>
-			<tr class="inside_border">
+			<tr class="inside_border" >
 				<th>총결제금액</th>
 				<th>
-				<input type="text" readonly="readonly" name="sum" style="text-align:right">원
+				<input  type="text" readonly="readonly" name="sum" style="text-align:right; width: 80px;"
+						inputmode="numeric" >원 
 				</th>
 			</tr>
-					<tr>
-				<td colspan="2">
-				<button type="button" class="btn btn-default btn-lg btn-block">결제하기</button>
+			<tr>
+				<td colspan="2" >
+				<button  type="submit" <%=userId == null?"style='display: none;'":""%> id="btn" class="btn btn-default btn-lg btn-block">구매하기</button>
 				</td>
 			</tr>
 			</table>

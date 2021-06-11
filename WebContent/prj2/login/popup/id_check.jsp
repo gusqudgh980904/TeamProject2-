@@ -1,7 +1,6 @@
 <%@page import="Member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,26 +39,14 @@
 		
 		obj.submit(); 
 		
-			<%	
-				String id = request.getParameter("checkTx"); //null 이뜸 var id = ${checkTx}도 null이뜸 왜 못받는거지..?
-			
-				MemberDAO mDAO = new MemberDAO();
-				
-				boolean idChk = mDAO.selectDupID(id);
-				
-				if(!idChk){
-			%>
-				pObj.id.value = idCheck;
-				window.close(); 					
-			<%
-				}else{
-			%>
-				alert("중복된 아이디입니다.");
-				return;	
-			<%
-				}
-			%>
+		
 		}
+	
+	function useId( id ){
+		opener.window.document.joinFrm.id.value = id;
+		self.close();
+		
+	}
 	
 </script>
 </head>
@@ -74,8 +61,29 @@
 				<input type="text" name ="checkTx" id ="checkTx" class="form-control text" maxlength="16"/>
 				<input type="button" value="ID 중복확인" name ="checkBt" id ="checkBt"  class="btn btn-default btn-lg" onclick="idCheck()"/>
 			</div>
-		</form>
+		</form>		
+	<div>
+	<%	
+		String id = request.getParameter("checkTx"); 
+	
+		if( id != null ){
+			MemberDAO mDAO = new MemberDAO();
+			boolean idChk = mDAO.selectDupID(id); //아이디가 존재한 true | false
+			
+		if( idChk ){
+	%>
+		<%= id %>는 이미 존재하는 아이디 입니다. <Br/>
+		 다른 아이디를 입력해주세요.
+	<%
+		}else{
+	%>
+		<%= id %>는 사용가능 합니다. 사용하시겠습니까?<a href="#void" onclick="useId('<%= id %>')"">사용</a>
+	<%
+			}
+		 }//end if
+	%>
 	</div>
+</div>
 </div>
 </body>
 </html>
